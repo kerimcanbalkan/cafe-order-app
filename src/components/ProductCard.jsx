@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 
-export default function ProductCard({imgSrc, title, price, category}) {
+function ProductCard({imgSrc, title, price, category}) {
   return (
     <Card className="rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1">
       <CardContent className="p-4 flex flex-col ">
@@ -31,3 +31,5 @@ export default function ProductCard({imgSrc, title, price, category}) {
     </Card>
   );
 }
+
+export {ProductCard}

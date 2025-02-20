@@ -1,4 +1,5 @@
-import ProductCard from "@/components/ProductCard";
+import { ProductCard } from "@/components/ProductCard";
+import { MenuNavbar } from "@/components/MenuNavbar";
 
 const products = [
   {
@@ -35,7 +36,9 @@ const products = [
 
 export default function Menu() {
   return (
-    <div className="container mx-auto my-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-8">
+    <div>
+    <MenuNavbar/>
+    <div className="container mx-auto my-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-8">
       {products.map((product, index) => (
         <ProductCard
           key={index}
@@ -46,6 +49,7 @@ export default function Menu() {
           category={product.category}
         />
       ))}
+    </div>
     </div>
   );
 }
