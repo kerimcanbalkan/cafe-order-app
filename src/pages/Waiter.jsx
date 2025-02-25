@@ -1,5 +1,3 @@
 export default function Waiter() {
-  return (
-  <div>Waiter</div>
-  )
+  return <div>Waiter</div>;
 }
