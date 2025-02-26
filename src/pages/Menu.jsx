@@ -4,19 +4,43 @@ import { fetchMenu } from "../api/menu";
 import Loading from "../components/Loading";
 import { MenuNavbar } from "../components/MenuNavbar";
 import { ProductCard } from "../components/ProductCard";
+import { Button } from "../components/ui/button";
 
 export default function Menu() {
   const {
     data: menu,
     isLoading,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["menu"],
     queryFn: fetchMenu,
   });
 
-  if (isLoading) return <Loading />;
-  if (error) return <p>Error fetching menu: {error.message}</p>;
+  if (isLoading)
+    return (
+      <div>
+        <MenuNavbar />
+        <Loading />
+      </div>
+    );
+  if (error)
+    return (
+      <div className="container mx-auto h-svh">
+        <MenuNavbar />
+        <div className="w-full h-full flex flex-col gap-3 items-center justify-center">
+          <h3 className="text-nord-11 text-lg">Could not load the menu!</h3>
+          <Button
+            className="bg-nord-11 text-white rounded-lg"
+            onClick={() => {
+              refetch();
+            }}
+          >
+            Retry
+          </Button>
+        </div>
+      </div>
+    );
 
   const products = menu?.data || [];
   const categories = [...new Set(products.map((product) => product.category))];
