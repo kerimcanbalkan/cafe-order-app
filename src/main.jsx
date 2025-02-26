@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import Waiter from "./pages/Waiter";
 import Cashier from "./pages/Cashier";
+import NotFound from "./pages/NotFound";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
@@ -15,7 +16,6 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Menu />,
-    errorElement: <div>404 NOT FOUND</div>,
   },
   {
     path: "/login",
