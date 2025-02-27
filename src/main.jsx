@@ -20,22 +20,22 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
-    errorElement: <div>404 NOT FOUND</div>,
   },
   {
     path: "/admin",
     element: <Admin />,
-    errorElement: <div>404 NOT FOUND</div>,
   },
   {
     path: "/waiter",
     element: <Waiter />,
-    errorElement: <div>404 NOT FOUND</div>,
   },
   {
     path: "/cashier",
     element: <Cashier />,
-    errorElement: <div>404 NOT FOUND</div>,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
