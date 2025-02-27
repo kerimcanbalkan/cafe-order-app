@@ -68,7 +68,7 @@ export default function Menu() {
                   <ProductCard
                     key={index}
                     imgSrc={`http://localhost:8000/api/v1/menu/images/${product.image}`}
-                    title={product.title}
+                    name={product.name}
                     description={product.description}
                     price={product.price}
                     category={product.category}
