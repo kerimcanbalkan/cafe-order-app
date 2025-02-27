@@ -69,7 +69,6 @@ export default function Menu() {
                     key={index}
                     imgSrc={`http://localhost:8000/api/v1/menu/images/${product.image}`}
                     name={product.name}
-                    description={product.description}
                     price={product.price}
                     category={product.category}
                   />
