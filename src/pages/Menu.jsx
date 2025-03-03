@@ -65,13 +65,7 @@ export default function Menu() {
               {products
                 .filter((product) => product.category === category)
                 .map((product, index) => (
-                  <ProductCard
-                    key={index}
-                    imgSrc={`http://localhost:8000/api/v1/menu/images/${product.image}`}
-                    name={product.name}
-                    price={product.price}
-                    category={product.category}
-                  />
+                  <ProductCard key={index} product={product} />
                 ))}
             </div>
           </TabsContent>
