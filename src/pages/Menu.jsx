@@ -45,6 +45,7 @@ export default function Menu() {
   const menuItems = menu?.data || [];
   const categories = [...new Set(menuItems.map((menuItem) => menuItem.category))];
   return (
+    <>
       <Tabs defaultValue={categories[0]}>
         <TabsList className="flex overflow-x-auto border-b border-gray-300 whitespace-nowrap no-scrollbar">
           {categories.map((category) => (
@@ -69,5 +70,6 @@ export default function Menu() {
           </TabsContent>
         ))}
       </Tabs>
+    </>
   );
 }

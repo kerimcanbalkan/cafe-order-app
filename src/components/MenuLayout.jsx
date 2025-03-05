@@ -5,13 +5,11 @@ import {SidebarProvider} from "@/components/ui/sidebar";
 
 export default function MenuLayout(){
   return (
-    <SidebarProvider>
-      <main>
-        <MenuNavbar/>
-        <div className="container mx-auto">
+    <SidebarProvider defaultOpen={false}>
+      <main className="container mx-auto">
+          <MenuNavbar/>
           <Outlet/>
-        </div>
-        <CartSidebar/>
+          <CartSidebar/>
       </main>
     </SidebarProvider>
   )

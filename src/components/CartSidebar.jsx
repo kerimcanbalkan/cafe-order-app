@@ -8,7 +8,7 @@ import {
 
 export function CartSidebar() {
   return (
-    <Sidebar side="right">
+    <Sidebar side="right"  collapsible="offcanvas">
       <SidebarHeader >
         Cart
       </SidebarHeader>
@@ -18,5 +18,5 @@ export function CartSidebar() {
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>
-  )
+  );
 }
