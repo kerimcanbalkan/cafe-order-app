@@ -4,26 +4,26 @@ import { QuantitySelector } from "@/components/QuantitySelector";
 import { useState } from "react";
 import { Button } from "./ui/button";
 /**
- * Displays the product details inside a dialog.
+ * Displays the menuItem details inside a dialog.
  * @param {Object} props - The component props.
  * @param {boolean} props.open - Controls whether the dialog is open.
  * @param {function(boolean):void} props.setOpen - Function to toggle the dialog open state.
- * @param {Object} props.product - The product details.
- * @param {string} props.product.name - The name of the product.
- * @param {string} props.product.description - The product description.
- * @param {string} props.product.category - The product category.
- * @param {number} props.product.price - The product price.
- * @param {string} props.product.image - The product image url.
+ * @param {Object} props.menuItem - The product details.
+ * @param {string} props.menuItem.name - The name of the product.
+ * @param {string} props.menuItem.description - The product description.
+ * @param {string} props.menuItem.category - The product category.
+ * @param {number} props.menuItem.price - The product price.
+ * @param {string} props.menuItem.image - The product image url.
  */
-function ProductDetailsCard({ className, open, setOpen, product }) {
+function MenuItemDetailsCard({ className, open, setOpen, menuItem }) {
   const [quantity, setQuantity] = useState(1);
   return (
     <Dialog open={open} onOpenChange={setOpen} className={className}>
       <DialogContent className="p-8">
         <div className="relative">
           <img
-            src={`http://localhost:8000/api/v1/menu/images/${product.image}`}
-            alt="Product Image"
+            src={`http://localhost:8000/api/v1/menu/images/${menuItem.image}`}
+            alt="menuItem Image"
             className="w-full h-60 object-cover rounded-md object-center"
           />
           <QuantitySelector
@@ -32,16 +32,16 @@ function ProductDetailsCard({ className, open, setOpen, product }) {
             onChange={(val) => setQuantity(val)}
           />
         </div>
-        <DialogTitle className="text-nord-0">{product.name}</DialogTitle>
+        <DialogTitle className="text-nord-0">{menuItem.name}</DialogTitle>
         <DialogDescription className="text-nord-2 text-sm">
-          {product.description}
+          {menuItem.description}
         </DialogDescription>
         <Button className="bg-nord-11 text-nord-6 hover:bg-nord-12">
-          Add to cart for <span className="font-bold">${product.price}</span>
+          Add to cart for <span className="font-bold">${menuItem.price}</span>
         </Button>
       </DialogContent>
     </Dialog>
   );
 }
 
-export { ProductDetailsCard };
+export { MenuItemDetailsCard };

@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchMenu } from "../api/menu";
 import Loading from "../components/Loading";
 import { MenuNavbar } from "../components/MenuNavbar";
-import { ProductCard } from "../components/ProductCard";
+import { MenuItemCard } from "../components/MenuItemCard";
 import { Button } from "../components/ui/button";
 
 export default function Menu() {
@@ -42,8 +42,8 @@ export default function Menu() {
       </div>
     );
 
-  const products = menu?.data || [];
-  const categories = [...new Set(products.map((product) => product.category))];
+  const menuItems = menu?.data || [];
+  const categories = [...new Set(menuItems.map((menuItem) => menuItem.category))];
   return (
       <Tabs defaultValue={categories[0]}>
         <TabsList className="flex overflow-x-auto border-b border-gray-300 whitespace-nowrap no-scrollbar">
@@ -60,10 +60,10 @@ export default function Menu() {
         {categories.map((category) => (
           <TabsContent key={category} value={category}>
             <div className="container mx-auto my-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-8">
-              {products
-                .filter((product) => product.category === category)
-                .map((product, index) => (
-                  <ProductCard key={index} product={product} />
+              {menuItems
+                .filter((menuItem) => menuItem.category === category)
+                .map((menuItem, index) => (
+                  <MenuItemCard key={index} menuItem={menuItem} />
               ))}
             </div>
           </TabsContent>
