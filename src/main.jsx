@@ -8,6 +8,7 @@ import Admin from "./pages/Admin";
 import Waiter from "./pages/Waiter";
 import Cashier from "./pages/Cashier";
 import NotFound from "./pages/NotFound";
+import MenuLayout from "./components/MenuLayout"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
@@ -15,7 +16,13 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Menu />,
+    element: <MenuLayout />,
+    children: [
+      {
+      index: true,
+        element: <Menu/>,
+      }
+    ]
   },
   {
     path: "/login",

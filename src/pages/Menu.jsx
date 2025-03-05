@@ -45,8 +45,6 @@ export default function Menu() {
   const products = menu?.data || [];
   const categories = [...new Set(products.map((product) => product.category))];
   return (
-    <div className="container mx-auto">
-      <MenuNavbar />
       <Tabs defaultValue={categories[0]}>
         <TabsList className="flex overflow-x-auto border-b border-gray-300 whitespace-nowrap no-scrollbar">
           {categories.map((category) => (
@@ -66,11 +64,10 @@ export default function Menu() {
                 .filter((product) => product.category === category)
                 .map((product, index) => (
                   <ProductCard key={index} product={product} />
-                ))}
+              ))}
             </div>
           </TabsContent>
         ))}
       </Tabs>
-    </div>
   );
 }

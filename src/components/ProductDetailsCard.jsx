@@ -17,7 +17,6 @@ import { Button } from "./ui/button";
  */
 function ProductDetailsCard({ className, open, setOpen, product }) {
   const [quantity, setQuantity] = useState(1);
-
   return (
     <Dialog open={open} onOpenChange={setOpen} className={className}>
       <DialogContent className="p-8">
