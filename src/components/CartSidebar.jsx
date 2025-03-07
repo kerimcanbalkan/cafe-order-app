@@ -2,21 +2,40 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
   SidebarHeader,
+  useSidebar
 } from "@/components/ui/sidebar"
+import { X } from "lucide-react";
+import CartMenuItemCard from "@/components/CartMenuItemCard"
+import { Button } from "./ui/button";
+import { useCart } from "@/context/cart"
 
 export function CartSidebar() {
+  const { toggleSidebar } = useSidebar();
+  const { cart, removeFromCart, clearCart } = useCart();
+  
   return (
-    <Sidebar side="right"  collapsible="offcanvas">
-      <SidebarHeader >
-        Cart
+    <Sidebar side="right" variant="floating" collapsible="offcanvas">
+      <SidebarHeader className="flex items-end">
+        <X className="text-nord-11 hover:text-xl" onClick={toggleSidebar}/>
       </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup />
-        <SidebarGroup />
+      <SidebarContent className="p-3">
+        {cart.length === 0 ? (
+          <p className="text-center">Cart is empty</p>
+        ) : (
+          cart.map((item) => (
+            <CartMenuItemCard key={item.id} menuItem={item} />
+          ))
+        )}
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <Button className="bg-nord-11 text-nord-6 hover:bg-nord-12">
+          Place Order
+        </Button>
+      </SidebarFooter>
     </Sidebar>
   );
 }
+
+
+
