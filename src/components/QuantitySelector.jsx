@@ -2,27 +2,16 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
 
-export function QuantitySelector({ value = 1, onChange, className }) {
-  const [quantity, setQuantity] = useState(value);
-
+export function QuantitySelector({quantity, setQuantity, onChange, className }) {
   const handleDecrease = () => {
     if (quantity > 1) {
-      setQuantity((prev) => {
-        const newValue = prev - 1;
-        onChange?.(newValue);
-        return newValue;
-      });
+      setQuantity(quantity + 1);
     }
   };
 
   const handleIncrease = () => {
-    setQuantity((prev) => {
-      const newValue = prev + 1;
-      onChange?.(newValue);
-      return newValue;
-    });
-  };
-
+    setQuantity(quantity + 1);
+  }
   return (
     <div
       className={`flex items-center bg-white rounded-full p-1 w-fit text-nord-0 ${className}`}

@@ -3,6 +3,9 @@ import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import { QuantitySelector } from "@/components/QuantitySelector";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { useCart } from "@/context/cart"
+import { useAlert } from "@/components/AlertProvider";
+
 /**
  * Displays the menuItem details inside a dialog.
  * @param {Object} props - The component props.
@@ -17,6 +20,14 @@ import { Button } from "./ui/button";
  */
 function MenuItemDetailsCard({ className, open, setOpen, menuItem }) {
   const [quantity, setQuantity] = useState(1);
+  const {addToCart} = useCart();
+  const showAlert = useAlert();
+
+  const handleAddToCart = () => {
+    addToCart({menuItem, quantity});
+    showAlert("success", "Success!", `${menuItem.name} added to cart!`);
+    setOpen(false);
+  }
   return (
     <Dialog open={open} onOpenChange={setOpen} className={className}>
       <DialogContent className="p-8">
@@ -28,16 +39,17 @@ function MenuItemDetailsCard({ className, open, setOpen, menuItem }) {
           />
           <QuantitySelector
             className="absolute bottom-2 left-1/2 transform -translate-x-1/2"
+            quantity={quantity}
+            setQuantity={setQuantity}
             value={1}
-            onChange={(val) => setQuantity(val)}
           />
         </div>
         <DialogTitle className="text-nord-0">{menuItem.name}</DialogTitle>
         <DialogDescription className="text-nord-2 text-sm">
           {menuItem.description}
         </DialogDescription>
-        <Button className="bg-nord-11 text-nord-6 hover:bg-nord-12">
-          Add to cart for <span className="font-bold">${menuItem.price}</span>
+        <Button className="bg-nord-11 text-nord-6 hover:bg-nord-12" onClick={handleAddToCart}>
+          Add to cart for <span className="font-bold">${menuItem.price * quantity}</span>
         </Button>
       </DialogContent>
     </Dialog>
