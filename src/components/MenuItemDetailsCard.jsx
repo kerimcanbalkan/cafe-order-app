@@ -48,7 +48,7 @@ function MenuItemDetailsCard({ className, open, setOpen, menuItem }) {
         <DialogDescription className="text-nord-2 text-sm">
           {menuItem.description}
         </DialogDescription>
-        <Button className="bg-nord-11 text-nord-6 hover:bg-nord-12" onClick={handleAddToCart}>
+        <Button className="bg-nord-11 text-nord-6 hover:bg-nord-12 active:scale-95 transition" onClick={handleAddToCart}>
           Add to cart for <span className="font-bold">${menuItem.price * quantity}</span>
         </Button>
       </DialogContent>

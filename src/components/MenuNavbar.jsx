@@ -9,7 +9,7 @@ function MenuNavbar() {
       <h1 className="text-nord-0 text-2xl">CAFE</h1>
       <ShoppingBag
         onClick={toggleSidebar}
-        className="text-nord-0 w-5"
+        className="text-nord-0 w-5 active:scale-50 transition"
       />
     </div>
   );

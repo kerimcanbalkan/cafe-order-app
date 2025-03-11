@@ -40,9 +40,9 @@ export default function CartMenuItemCard({orderItem, className}){
             <h3>{orderItem.menuItem.name}</h3>
             <p className="font-bold">{orderItem.menuItem.price * orderItem.quantity}$</p>
             <div className="flex">
-              <LucideChevronLeft className="text-nord-11 cursor-pointer" onClick={handleRemoveClick}/>
+              <LucideChevronLeft className="text-nord-11 cursor-pointer active:scale-50 transition" onClick={handleRemoveClick}/>
               <p>{orderItem.quantity}</p>
-              <LucideChevronRight className="text-nord-14 cursor-pointer hover:text-xl" onClick={handleAddClick}/>
+              <LucideChevronRight className="text-nord-14 cursor-pointer active:scale-50 transition" onClick={handleAddClick}/>
             </div>
           </div>
         </CardHeader>
