@@ -2,42 +2,51 @@ import {
   Card,
   CardHeader,
 } from "@/components/ui/card"
-import {X} from "lucide-react"
+import {LucideChevronLeft, LucideChevronRight} from "lucide-react"
 import {useCart} from "@/context/cart";
 /**
- * Renders a menuItem card for the sidebar that users can see what they are orderings and edit the order.
+ * Renders an order item card for the sidebar, showing the ordered menu item details and allowing users to edit the order.
  * @param {Object} props - The component props.
- * @param {Object} props.menuItem - The menuItem details.
- * @param {string} props.menuItem.name - The menuItem name.
- * @param {string} props.menuItem.description - The menuItem description.
- * @param {string} props.menuItem.category - The menuItem caregory.
- * @param {number} props.menuItem.price - The menuItem price.
- * @param {string} props.menuItem.image - The menuItem image url .
+ * @param {Object} props.orderItem - The order item details.
+ * @param {Object} props.orderItem.menuItem - The menu item details.
+ * @param {string} props.orderItem.menuItem.name - The menu item name.
+ * @param {string} props.orderItem.menuItem.description - The menu item description.
+ * @param {string} props.orderItem.menuItem.category - The menu item category.
+ * @param {number} props.orderItem.menuItem.price - The menu item price.
+ * @param {string} props.orderItem.menuItem.image - The menu item image URL.
+ * @param {number} props.orderItem.quantity - The quantity of the ordered menu item.
  */
-export default function CarMenuItemCard({menuItem, className}){
-  const { removeFromCart } = useCart();
+export default function CartMenuItemCard({orderItem, className}){
+  const { addToCart, removeFromCart } = useCart();
+
+  const handleAddClick = () => {
+      addToCart(orderItem);
+  }
+
+  const handleRemoveClick = () => {
+    removeFromCart(orderItem);
+  }
+    
   return (
     <>
       <Card className={className}>
         <CardHeader className="p-2">
           <div className="flex items-center justify-between">
             <img
-              src={`http://localhost:8000/api/v1/menu/images/${menuItem.image}`}
+              src={`http://localhost:8000/api/v1/menu/images/${orderItem.menuItem.image}`}
               alt="menuItem Image"
               className="w-10 h-10 object-cover rounded-md object-center"
             />
-            <h3>{menuItem.name}</h3>
-            <p className="font-bold">{menuItem.price}$</p>
-            <X className="w-4 text-nord-11 flex justify-self-end" onClick={() => {removeFromCart(menuItem.id)}
-            }/>
+            <h3>{orderItem.menuItem.name}</h3>
+            <p className="font-bold">{orderItem.menuItem.price * orderItem.quantity}$</p>
+            <div className="flex">
+              <LucideChevronLeft className="text-nord-11 cursor-pointer" onClick={handleRemoveClick}/>
+              <p>{orderItem.quantity}</p>
+              <LucideChevronRight className="text-nord-14 cursor-pointer hover:text-xl" onClick={handleAddClick}/>
+            </div>
           </div>
         </CardHeader>
       </Card>
     </>
   )
 }
-
-
-
-
-

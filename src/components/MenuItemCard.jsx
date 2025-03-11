@@ -29,7 +29,7 @@ function MenuItemCard({ menuItem }) {
 
   const handlePlusButtonClick = (e) =>  {
     e.stopPropagation();
-    addToCart(menuItem);
+    addToCart({menuItem: menuItem, quantity: 1});
     showAlert("success", "Success!", `${menuItem.name} added to cart!`);
   }
   

@@ -25,7 +25,7 @@ export function CartSidebar() {
           <p className="text-md text-nord-11 text-center">Nothing here!</p>
         ) : (
           cart.map((item) => (
-            <CartMenuItemCard key={item.id} menuItem={item} />
+            <CartMenuItemCard key={item.id} orderItem={item} />
           ))
         )}
       </SidebarContent>
