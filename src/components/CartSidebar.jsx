@@ -9,10 +9,11 @@ import { X } from "lucide-react";
 import CartMenuItemCard from "@/components/CartMenuItemCard"
 import { Button } from "./ui/button";
 import { useCart } from "@/context/cart"
+import { useAlert } from "@/components/AlertProvider";
 
 export function CartSidebar() {
   const { toggleSidebar } = useSidebar();
-  const { cart, removeFromCart, clearCart } = useCart();
+  const { cart, getCartTotal, clearCart } = useCart();
   
   return (
     <Sidebar side="right" variant="inset">
@@ -20,7 +21,7 @@ export function CartSidebar() {
         <X className="text-nord-11 hover:text-xl" onClick={toggleSidebar}/>
       </SidebarHeader>
       <SidebarContent className="p-3">
-        <p className="border-b border-nord-4 text-nord-1 mb-2 text-lg">Cart</p>
+        <div className="border-b border-nord-4  mb-2"></div>
         {cart.length === 0 ? (
           <p className="text-md text-nord-11 text-center">Nothing here!</p>
         ) : (
@@ -28,9 +29,11 @@ export function CartSidebar() {
             <CartMenuItemCard key={item.id} orderItem={item} />
           ))
         )}
+        <p class="text-lg border-t border-nord-4 pt-1 text-nord-1 mt-2 flex justify-around">Total Price <span className="font-bold">{getCartTotal()}$</span></p>
+        <Button className="bg-nord-10 text-lg"onClick={clearCart}>Clear Cart</Button>
       </SidebarContent>
       <SidebarFooter>
-        <Button className="bg-nord-11 text-nord-6 hover:bg-nord-12">
+        <Button className="bg-nord-11 text-nord-6 text-lg hover:bg-nord-12">
           Place Order
         </Button>
       </SidebarFooter>
