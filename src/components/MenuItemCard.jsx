@@ -9,6 +9,7 @@ import { MenuItemDetailsCard } from "@/components/MenuItemDetailsCard";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { useCart } from "@/context/cart";
+import { useAlert } from "@/components/AlertProvider";
 
 /**
  * Renders a clickable menuItem card that opens a details dialog.
@@ -23,6 +24,14 @@ import { useCart } from "@/context/cart";
 function MenuItemCard({ menuItem }) {
   const [open, setOpen] = useState(false);
   const {addToCart} = useCart();
+  const showAlert = useAlert();
+
+
+  const handlePlusButtonClick = (e) =>  {
+    e.stopPropagation();
+    addToCart(menuItem);
+    showAlert("success", "Success!", `${menuItem.name} added to cart!`);
+  }
   
   return (
     <>
@@ -47,10 +56,7 @@ function MenuItemCard({ menuItem }) {
           </CardDescription>
           <div className="flex justify-between items-center">
             <p className="text-nord-0">${menuItem.price}</p>
-            <Button className="text-white bg-nord-11 rounded-md hover:bg-nord-12" onClick={(e) => {
-              e.stopPropagation();
-              addToCart(menuItem)
-            }}>
+            <Button className="text-white bg-nord-11 rounded-md hover:bg-nord-12" onClick={(e) => {handlePlusButtonClick(e)}}>
               <Plus />
             </Button>
           </div>

@@ -4,7 +4,6 @@ import {
 } from "@/components/ui/card"
 import {X} from "lucide-react"
 import {useCart} from "@/context/cart";
-
 /**
  * Renders a menuItem card for the sidebar that users can see what they are orderings and edit the order.
  * @param {Object} props - The component props.
