@@ -15,7 +15,7 @@ const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/order/:tableNumber",
     element: <MenuLayout />,
     children: [
       {
