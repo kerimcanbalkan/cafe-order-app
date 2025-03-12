@@ -20,14 +20,12 @@ export default function Menu() {
   if (isLoading)
     return (
       <div>
-        <MenuNavbar />
         <Loading />
       </div>
     );
   if (error)
     return (
       <div className="container mx-auto h-svh">
-        <MenuNavbar />
         <div className="w-full h-full flex flex-col gap-3 items-center justify-center">
           <h3 className="text-nord-11 text-lg">Could not load the menu!</h3>
           <Button
