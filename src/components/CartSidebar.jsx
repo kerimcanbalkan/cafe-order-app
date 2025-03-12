@@ -4,17 +4,19 @@ import {
   SidebarFooter,
   SidebarHeader,
   useSidebar
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 import { X } from "lucide-react";
-import CartMenuItemCard from "@/components/CartMenuItemCard"
+import CartMenuItemCard from "@/components/CartMenuItemCard";
 import { Button } from "./ui/button";
-import { useCart } from "@/context/cart"
-import { useAlert } from "@/components/AlertProvider";
+import { useCart } from "@/context/cart";
+import { useParams } from "react-router-dom";
+import PlaceOrderButton from "./PlaceOrderButton";
 
 export function CartSidebar() {
   const { toggleSidebar } = useSidebar();
   const { cart, getCartTotal, clearCart } = useCart();
-  
+
+    
   return (
     <Sidebar side="right" variant="inset">
       <SidebarHeader className="flex items-end">
@@ -33,9 +35,7 @@ export function CartSidebar() {
         <Button className="bg-nord-10 text-lg active:scale-50 transition"onClick={clearCart}>Clear Cart</Button>
       </SidebarContent>
       <SidebarFooter>
-        <Button className="bg-nord-11 text-nord-6 text-lg hover:bg-nord-12 active:scale-50 transition">
-          Place Order
-        </Button>
+        <PlaceOrderButton/>
       </SidebarFooter>
     </Sidebar>
   );
