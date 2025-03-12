@@ -5,11 +5,13 @@ import Loading from "@/components/Loading";
 import { useCart } from "@/context/cart";
 import { useParams } from "react-router-dom";
 import { postOrder } from "../api/order";
+import {useOrder} from "@/context/order";
 
 export default function PlaceOrderButton(){
   const showAlert = useAlert();
-  const {cart} = useCart();
+  const {cart, clearCart} = useCart();
   const { tableNumber } = useParams();
+  const {addToOrder}  = useOrder();
   
   const mutation = useMutation({
     mutationFn: (cart, tableNumber) => {
@@ -21,6 +23,8 @@ export default function PlaceOrderButton(){
     },
     onSuccess: () => {
       showAlert("success", "Success!", "Order Placed Successfully");
+      addToOrder(cart);
+      clearCart();
       console.log("success order posted");
     },
   });
@@ -31,7 +35,7 @@ export default function PlaceOrderButton(){
   }
   
   return (
-    <Button className="bg-nord-11 text-nord-6 text-lg hover:bg-nord-12 active:scale-50 transition" disabled={mutation.isLoading} onClick={handlePlaceOrder}>
+    <Button className="bg-nord-14 text-white text-lg hover:bg-nord-12 active:scale-50 transition" disabled={mutation.isLoading} onClick={handlePlaceOrder}>
       {mutation.isLoading ? <Loading/> : 'Place Order'}
     </Button>
   )
