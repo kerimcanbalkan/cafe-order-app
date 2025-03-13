@@ -50,7 +50,7 @@ export default function Menu() {
             <TabsTrigger
               key={category}
               value={category}
-              className="px-4 py-2 text-nord-0 hover:text-nord-3 transition-colors font-medium border-b-2 border-transparent data-[state=active]:text-nord- data-[state=active]:border-nord-0"
+              className="px-4 py-2 text-nord-0 hover:text-nord-3 transition-colors font-medium border-b-2 border-transparent data-[state=active]:text-nord- data-[state=active]:border-nord-0 truncate"
             >
               {category}
             </TabsTrigger>

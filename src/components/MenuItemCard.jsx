@@ -48,10 +48,10 @@ function MenuItemCard({ menuItem }) {
 
             className="w-full h-48 object-cover rounded-md object-center transition duration-300 ease-in-out mb-1"
           />
-          <CardTitle className="text-xl font-semibold text-nord-0">
+          <CardTitle className="text-xl font-semibold text-nord-0 truncate">
             {menuItem.name}
           </CardTitle>
-          <CardDescription className="mb-1 text-nord-11">
+          <CardDescription className="mb-1 text-nord-11 truncate">
             {menuItem.category}
           </CardDescription>
           <div className="flex justify-between items-center">
