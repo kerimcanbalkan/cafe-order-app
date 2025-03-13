@@ -16,8 +16,6 @@ export function CartSidebar() {
   const { toggleSidebar } = useSidebar();
   const { cart, getCartTotal, clearCart } = useCart();
   const {order, getOrderTotal}  = useOrder();
-
-  console.log("This is order right now", order);
     
   return (
     <Sidebar side="right" variant="inset">
