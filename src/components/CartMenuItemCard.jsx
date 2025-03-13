@@ -37,7 +37,7 @@ export default function CartMenuItemCard({orderItem, className}){
               alt="menuItem Image"
               className="w-10 h-10 object-cover rounded-md object-center"
             />
-            <h3>{orderItem.menuItem.name}</h3>
+            <h3 className="truncate p-2">{orderItem.menuItem.name}</h3>
             <p className="font-bold">{orderItem.menuItem.price * orderItem.quantity}$</p>
             <div className="flex">
               <LucideChevronLeft className="text-nord-11 cursor-pointer active:scale-50 transition" onClick={handleRemoveClick}/>
