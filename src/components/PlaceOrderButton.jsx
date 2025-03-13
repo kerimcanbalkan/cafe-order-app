@@ -25,7 +25,6 @@ export default function PlaceOrderButton(){
       showAlert("success", "Success!", "Order Placed Successfully");
       addToOrder(cart);
       clearCart();
-      console.log("success order posted");
     },
   });
 
@@ -35,7 +34,7 @@ export default function PlaceOrderButton(){
   }
   
   return (
-    <Button className="bg-nord-14 text-white text-lg hover:bg-nord-12 active:scale-50 transition" disabled={mutation.isLoading} onClick={handlePlaceOrder}>
+    <Button className="bg-nord-14 text-white text-lg hover:bg-nord-12 transition-transform duration-200 ease-in-out active:scale-90 focus:scale-100" disabled={mutation.isLoading} onClick={handlePlaceOrder}>
       {mutation.isLoading ? <Loading/> : 'Place Order'}
     </Button>
   )

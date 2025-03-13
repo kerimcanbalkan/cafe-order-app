@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
 
-export function QuantitySelector({quantity, setQuantity, onChange, className }) {
+export function QuantitySelector({quantity, setQuantity,  className }) {
   const handleDecrease = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);

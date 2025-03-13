@@ -45,9 +45,9 @@ export default function CartMenuItemCard({orderItem, className}){
             <h3 className="truncate p-2">{orderItem.menuItem.name}</h3>
             <p className="font-bold">{calculatePrice(orderItem.menuItem.price, orderItem.quantity)}$</p>
             <div className="flex">
-              <LucideChevronLeft className="text-nord-11 cursor-pointer active:scale-50 transition" onClick={handleRemoveClick}/>
+              <LucideChevronLeft className="text-nord-11 cursor-pointer transition-transform duration-200 ease-in-out active:scale-50 focus:scale-100" onClick={handleRemoveClick}/>
               <p>{orderItem.quantity}</p>
-              <LucideChevronRight className="text-nord-14 cursor-pointer active:scale-50 transition" onClick={handleAddClick}/>
+              <LucideChevronRight className="text-nord-14 cursor-pointer transition-transform duration-200 ease-in-out active:scale-50 focus:scale-100" onClick={handleAddClick}/>
             </div>
           </div>
         </CardHeader>

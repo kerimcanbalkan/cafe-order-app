@@ -20,7 +20,7 @@ export function CartSidebar() {
   return (
     <Sidebar side="right" variant="inset">
       <SidebarHeader className="flex items-end">
-        <X className="text-nord-11 active:scale-50 transition" onClick={toggleSidebar}/>
+        <X className="text-nord-11" onClick={toggleSidebar}/>
       </SidebarHeader>
       <SidebarContent className="p-3">
         {order.length === 0 ? (
@@ -57,7 +57,7 @@ export function CartSidebar() {
                 {cart.length === 0 ? (""): (
           <div>
                         <p class="text-lg border-t border-nord-4 pt-3 text-nord-1 mt-2 flex justify-between">Total Price <span className="font-bold">{getCartTotal()}$</span></p>
-            <Button className="bg-nord-11 w-full mt-4 text-lg active:scale-50 transition"onClick={clearCart}>Clear Cart</Button>
+            <Button className="bg-nord-11 w-full mt-4 text-lg transition-transform duration-200 ease-in-out active:scale-90 focus:scale-100"onClick={clearCart}>Clear Cart</Button>
           </div>
         )}
       </SidebarContent>
