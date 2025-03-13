@@ -45,21 +45,20 @@ export function CartSidebar() {
               </p>
             </div>
           </div>
-        )}                                        
-        <h2 className="border-b border-nord-14 mb-2 text-xl text-nord-14 font-bold">Cart</h2>
+        )}
+        <h2 className="border-b border-nord-14 my-2 text-xl text-nord-14 font-bold">Cart</h2>
+        <div className="overflow-y-scroll">
         {cart.length === 0 ? (
           <p className="text-md text-nord-11">Nothing in Cart!</p>
         ) : (
           cart.map((item) => (
-            <div>
-            <CartMenuItemCard key={item.id} orderItem={item} />
-            </div>
+            <CartMenuItemCard key={item.id} orderItem={item} className="mb-2" />
           ))
         )}
-
-        {cart.length === 0 ? (""): (
+        </div>
+                {cart.length === 0 ? (""): (
           <div>
-                        <p class="text-lg border-t border-nord-4 pt-3 text-nord-1 mt-2 flex justify-around">Total Price <span className="font-bold">{getCartTotal()}$</span></p>
+                        <p class="text-lg border-t border-nord-4 pt-3 text-nord-1 mt-2 flex justify-between">Total Price <span className="font-bold">{getCartTotal()}$</span></p>
             <Button className="bg-nord-11 w-full mt-4 text-lg active:scale-50 transition"onClick={clearCart}>Clear Cart</Button>
           </div>
         )}
