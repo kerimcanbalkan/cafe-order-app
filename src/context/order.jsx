@@ -36,7 +36,8 @@ export const OrderProvider = ({ children }) => {
   };
 
   const getOrderTotal = () => {
-    return order.reduce((total, item) => total + item.menuItem.price * item.quantity, 0);
+    const total =  order.reduce((total, item) => total + item.menuItem.price * item.quantity, 0);
+    return Math.trunc(total*100)/100;
   };
 
   useEffect(() => {

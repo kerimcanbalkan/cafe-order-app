@@ -26,6 +26,11 @@ export default function CartMenuItemCard({orderItem, className}){
   const handleRemoveClick = () => {
     removeFromCart(orderItem);
   }
+
+  const calculatePrice = (price, quantity) => {
+    const total = price * quantity;
+    return Math.trunc(total * 100)/100;
+}
     
   return (
     <>
@@ -38,7 +43,7 @@ export default function CartMenuItemCard({orderItem, className}){
               className="w-10 h-10 object-cover rounded-md object-center"
             />
             <h3 className="truncate p-2">{orderItem.menuItem.name}</h3>
-            <p className="font-bold">{orderItem.menuItem.price * orderItem.quantity}$</p>
+            <p className="font-bold">{calculatePrice(orderItem.menuItem.price, orderItem.quantity)}$</p>
             <div className="flex">
               <LucideChevronLeft className="text-nord-11 cursor-pointer active:scale-50 transition" onClick={handleRemoveClick}/>
               <p>{orderItem.quantity}</p>

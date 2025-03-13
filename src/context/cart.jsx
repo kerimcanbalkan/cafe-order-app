@@ -43,7 +43,8 @@ export const CartProvider = ({ children }) => {
   };
 
   const getCartTotal = () => {
-    return cart.reduce((total, item) => total + item.menuItem.price * item.quantity, 0);
+    const total = cart.reduce((total, item) => total + item.menuItem.price * item.quantity, 0);
+    return Math.trunc(total*100)/100;
   };
 
   useEffect(() => {
