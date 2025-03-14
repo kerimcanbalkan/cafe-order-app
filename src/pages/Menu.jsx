@@ -2,7 +2,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMenu } from "../api/menu";
 import Loading from "../components/Loading";
-import { MenuNavbar } from "../components/MenuNavbar";
 import { MenuItemCard } from "../components/MenuItemCard";
 import { Button } from "../components/ui/button";
 

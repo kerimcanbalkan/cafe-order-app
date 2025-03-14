@@ -7,12 +7,13 @@ import { useParams } from "react-router-dom";
 import { postOrder } from "../api/order";
 import {useOrder} from "@/context/order";
 
+
 export default function PlaceOrderButton(){
   const showAlert = useAlert();
   const {cart, clearCart} = useCart();
   const { tableNumber } = useParams();
-  const {addToOrder}  = useOrder();
-  
+  const { refetchOrder } = useOrder();
+
   const mutation = useMutation({
     mutationFn: (cart, tableNumber) => {
       return postOrder(cart,tableNumber);
@@ -23,7 +24,7 @@ export default function PlaceOrderButton(){
     },
     onSuccess: () => {
       showAlert("success", "Success!", "Order Placed Successfully");
-      addToOrder(cart);
+      refetchOrder();
       clearCart();
     },
   });

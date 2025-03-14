@@ -15,7 +15,7 @@ import PlaceOrderButton from "./PlaceOrderButton";
 export function CartSidebar() {
   const { toggleSidebar } = useSidebar();
   const { cart, getCartTotal, clearCart } = useCart();
-  const {order, getOrderTotal}  = useOrder();
+  const { order, getOrderTotal } = useOrder();
     
   return (
     <Sidebar side="right" variant="inset">
