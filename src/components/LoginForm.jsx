@@ -48,7 +48,9 @@ export function LoginForm({
     },
     onError: (error) => {
       console.error("Login Error:", error);
-      showAlert("error", "Error!", error.message || "Invalid username or password.");
+      showAlert("error", "Error!", "Invalid username or password.");
+      setUsername("");
+      setPassword("");
     }
   });
 
@@ -59,7 +61,6 @@ export function LoginForm({
 
     mutation.mutate({ username, password });
 
-    // Clear input fields
     e.target.reset();
   };
   
