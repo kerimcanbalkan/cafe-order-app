@@ -56,7 +56,7 @@ function MenuItemCard({ menuItem }) {
           </CardDescription>
           <div className="flex justify-between items-center">
             <p className="text-nord-0">${menuItem.price}</p>
-            <Button className="text-white bg-nord-11 rounded-md hover:bg-nord-12 
+            <Button className="text-white bg-nord-11 rounded-md hover:bg-nord-1 
              transition-transform duration-200 ease-in-out 
              active:scale-90 focus:scale-100" onClick={(e) => {handlePlusButtonClick(e)}}>
               <Plus />
