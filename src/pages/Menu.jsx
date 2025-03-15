@@ -28,7 +28,7 @@ export default function Menu() {
         <div className="w-full h-full flex flex-col gap-3 items-center justify-center">
           <h3 className="text-nord-11 text-lg">Could not load the menu!</h3>
           <Button
-            className="bg-nord-11 text-white rounded-lg active:scale-95 transition"
+            className="bg-nord-11 hover:bg-nord-1 text-white rounded-lg active:scale-95 transition"
             onClick={() => {
               refetch();
             }}
@@ -41,11 +41,27 @@ export default function Menu() {
 
   const menuItems = menu?.data || [];
   const categories = [...new Set(menuItems.map((menuItem) => menuItem.category))];
+
+  
+  // Sort categories alphabetically, but for two-word categories, sort based on the second word
+  const sortedCategories = categories.sort((a, b) => {
+    const wordsA = a.split(' ');
+    const wordsB = b.split(' ');
+
+    // If both have two words, compare by the second word
+    if (wordsA.length === 2 && wordsB.length === 2) {
+      return wordsA[1].localeCompare(wordsB[1]);
+    }
+
+    // Otherwise, compare alphabetically
+    return a.localeCompare(b);
+  });
+  
   return (
     <>
       <Tabs defaultValue={categories[0]}>
         <TabsList className="flex overflow-x-auto border-b border-gray-300 whitespace-nowrap no-scrollbar">
-          {categories.map((category) => (
+          {sortedCategories.map((category) => (
             <TabsTrigger
               key={category}
               value={category}
