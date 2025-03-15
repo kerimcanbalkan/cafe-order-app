@@ -45,7 +45,7 @@ function MenuItemDetailsCard({ className, open, setOpen, menuItem }) {
           />
         </div>
         <DialogTitle className="text-nord-0 truncate">{menuItem.name}</DialogTitle>
-        <DialogDescription className="text-nord-2 text-sm truncate">
+        <DialogDescription className="text-nord-2 text-sm">
           {menuItem.description}
         </DialogDescription>
         <Button className="bg-nord-11 text-nord-6 hover:bg-nord-12 active:scale-95 transition truncate" onClick={handleAddToCart}>
