@@ -16,6 +16,19 @@ export function CartSidebar() {
   const { toggleSidebar } = useSidebar();
   const { cart, getCartTotal, clearCart } = useCart();
   const { order, getOrderTotal } = useOrder();
+  const transformedOrder = order.length > 0
+        ? order.reduce((acc, order) => {
+            order.items.forEach((item) => {
+              const existingItem = acc.find((i) => i.menuItem.id === item.menuItem.id);
+              if (existingItem) {
+                existingItem.quantity += item.quantity;
+              } else {
+                acc.push({ ...item });
+              }
+            });
+            return acc;
+          }, [])
+        : [];
     
   return (
     <Sidebar side="right" variant="inset">
@@ -23,14 +36,14 @@ export function CartSidebar() {
         <X className="text-nord-11" onClick={toggleSidebar}/>
       </SidebarHeader>
       <SidebarContent className="p-3">
-        {order.length === 0 ? (
+        {transformedOrder.length === 0 ? (
           ""
         ) : (
           <div>
             <h2 className="border-b border-nord-10 mb-2 text-xl font-bold text-nord-10">
               Active Order
             </h2>
-            {order.map((item, index) => (
+            {transformedOrder.map((item, index) => (
               <div key={index} className="flex justify-between mb-2">
                 <p className="text-nord-1">{`${item.menuItem.name} x${item.quantity}`}</p>
                 <p className="font-bold text-nord-1">{`${item.menuItem.price * item.quantity}$`}</p>
@@ -57,7 +70,7 @@ export function CartSidebar() {
                 {cart.length === 0 ? (""): (
           <div>
                         <p class="text-lg border-t border-nord-4 pt-3 text-nord-1 mt-2 flex justify-between">Total Price <span className="font-bold">{getCartTotal()}$</span></p>
-            <Button className="bg-nord-11 w-full mt-4 text-lg transition-transform duration-200 ease-in-out active:scale-90 focus:scale-100"onClick={clearCart}>Clear Cart</Button>
+            <Button className="bg-nord-11 hover:bg-nord-1 w-full mt-4 text-lg transition-transform duration-200 ease-in-out active:scale-90 focus:scale-100"onClick={clearCart}>Clear Cart</Button>
           </div>
         )}
       </SidebarContent>
