@@ -9,6 +9,7 @@ import { getUserMe } from "@/api/user";
 import { useAlert } from "@/components/AlertProvider";
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from "@tanstack/react-query";
+import Loading from "@/components/Loading";
 
 export function LoginForm({
   className,
@@ -47,7 +48,6 @@ export function LoginForm({
       }
     },
     onError: (error) => {
-      console.error("Login Error:", error);
       showAlert("error", "Error!", "Invalid username or password.");
       setUsername("");
       setPassword("");
@@ -99,8 +99,8 @@ export function LoginForm({
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <Button type="submit" className="w-full bg-nord-10 text-white">
-                Login
+              <Button type="submit" className="w-full bg-nord-10 text-white" disabled={mutation.isPending}>
+                {mutation.isPending ? <Loading/> : 'Login'}
               </Button>
             </div>
           </form>

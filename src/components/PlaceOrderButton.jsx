@@ -36,7 +36,7 @@ export default function PlaceOrderButton(){
   
   return (
     <Button className="bg-nord-14 text-white text-lg hover:bg-nord-12 transition-transform duration-200 ease-in-out active:scale-90 focus:scale-100" disabled={mutation.isLoading} onClick={handlePlaceOrder}>
-      {mutation.isLoading ? <Loading/> : 'Place Order'}
+      {mutation.isPending ? <Loading/> : 'Place Order'}
     </Button>
   )
 }
