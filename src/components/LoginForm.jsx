@@ -3,13 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {useState} from "react";
-import {login} from "@/api/auth";
-import { getUserMe } from "@/api/user";
+import {useEffect, useState} from "react";
 import { useAlert } from "@/components/AlertProvider";
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from "@tanstack/react-query";
 import Loading from "@/components/Loading";
+import { useAuth } from "@/context/auth";
 
 export function LoginForm({
   className,
@@ -19,21 +18,28 @@ export function LoginForm({
   const [password, setPassword] = useState("");
   const showAlert = useAlert();
   const navigate = useNavigate();
+  const {authed, role, login} = useAuth();
+
+  useEffect(() => {
+    if (authed) {
+      switch (role) {
+      case "admin":
+        navigate("/admin");
+        break;
+      case "waiter":
+        navigate("/waiter");
+        break;
+      case "cashier":
+        navigate("/cashier");
+        break;
+      }
+    }
+  },[authed, role])
 
   const mutation = useMutation({
-    mutationFn: async ({ username, password }) => {
-      const { token } = await login({ username, password });
-      if (!token) throw new Error("No token received.");
-
-      localStorage.setItem("authToken", token);
-
-      const user = await getUserMe(token);
-      if (!user || !user.role) throw new Error("Could not retrieve user details.");
-
-      return user;
-    },
-    onSuccess: (user) => {
-      switch (user.role) {
+    mutationFn: () => { login(username,password) },
+    onSuccess: () => {
+      switch (role) {
         case "admin":
           navigate("/admin");
           break;
@@ -43,25 +49,19 @@ export function LoginForm({
         case "cashier":
           navigate("/cashier");
           break;
-        default:
-          showAlert("error", "Access Denied", "Unknown role detected.");
       }
     },
-    onError: (error) => {
+    onError: () => {
       showAlert("error", "Error!", "Invalid username or password.");
       setUsername("");
       setPassword("");
-    }
+    },
+    retry: false,
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const username = e.target.username.value;
-    const password = e.target.password.value;
-
-    mutation.mutate({ username, password });
-
-    e.target.reset();
+    mutation.mutate();
   };
   
   return (

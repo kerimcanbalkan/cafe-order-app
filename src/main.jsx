@@ -8,9 +8,11 @@ import Admin from "./pages/Admin";
 import Waiter from "./pages/Waiter";
 import Cashier from "./pages/Cashier";
 import NotFound from "./pages/NotFound";
-import MenuLayout from "./components/MenuLayout";
+import MenuLayout from "./components/layout/MenuLayout";
 import Error from "./pages/Error";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AuthProvider } from "@/context/auth";
+import RequireAuth from "@/components/RequireAuth";
 
 const queryClient = new QueryClient();
 
@@ -33,17 +35,30 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <Admin />,
+    element: (
+      <RequireAuth allowedRole="admin">
+        <Admin />
+      </RequireAuth>
+    ),
     errorElement: <Error/>,
   },
   {
     path: "/waiter",
-    element: <Waiter />,
+    element: (
+      <RequireAuth allowedRole="waiter">
+        <Waiter />
+      </RequireAuth>
+    ),
     errorElement: <Error/>,
   },
   {
     path: "/cashier",
-    element: <Cashier />,
+    element: (
+      <RequireAuth allowedRole="cashier">
+        <Cashier />
+      </RequireAuth>
+    )
+    ,
     errorElement: <Error/>,
   },
   {
@@ -54,8 +69,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    <AuthProvider>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
     </QueryClientProvider>
+          </AuthProvider>
   </StrictMode>,
 );

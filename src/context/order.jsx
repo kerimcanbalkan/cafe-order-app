@@ -13,7 +13,6 @@ export const OrderProvider = ({ children }) => {
     queryKey: ["order", tableNumber],
     queryFn: async () => {
       const response = await getActiveOrder(tableNumber);
-      console.log("This is order", response.data);
       return response?.data || [];
     },
   });

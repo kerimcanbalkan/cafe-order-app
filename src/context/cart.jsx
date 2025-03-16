@@ -48,13 +48,6 @@ export const CartProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const localCart = localStorage.getItem("cart");
-    if (localCart) {
-      setCart(JSON.parse(localCart));
-    }
-  }, []);
-  
-  useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
