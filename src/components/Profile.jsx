@@ -1,32 +1,25 @@
 import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarTrigger,
-} from "@/components/ui/menubar"
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { CircleUserRound } from "lucide-react";
-import { Link } from "react-router-dom";
 import { useAuth } from "@/context/auth";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Profile(){
-
+  const navigate = useNavigate();
   const {logout} = useAuth();
   
   return (
-    <Menubar className="border-none shadow-none">
-      <MenubarMenu>
-        <MenubarTrigger><CircleUserRound className="text-nord-0" size={26} /></MenubarTrigger>
-        <MenubarContent>
-          <MenubarItem className="text-md text-nord-0">
-            <Link to="#">Profile</Link>
-          </MenubarItem>
-          <MenubarItem className="text-md text-nord-0" onClick={logout}>
-            <Link to="#">Logout</Link>
-          </MenubarItem>
-        </MenubarContent>
-      </MenubarMenu>
-    </Menubar>
-  )
+    <DropdownMenu>
+      <DropdownMenuTrigger className="cursor-pointer"><CircleUserRound size={26} className="text-nord-10"/></DropdownMenuTrigger>
+      <DropdownMenuContent className="text-nord-0">
+        <DropdownMenuItem onClick={() => {navigate("#")}}>Profile</DropdownMenuItem>
+        <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 }
