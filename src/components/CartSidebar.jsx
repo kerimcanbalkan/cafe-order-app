@@ -12,6 +12,7 @@ import { useCart } from "@/context/cart";
 import {useOrder} from "@/context/order";
 import PlaceOrderButton from "./PlaceOrderButton";
 
+
 export function CartSidebar() {
   const { toggleSidebar } = useSidebar();
   const { cart, getCartTotal, clearCart } = useCart();
@@ -58,7 +59,7 @@ export function CartSidebar() {
           </div>
         )}
         <h2 className="border-b border-nord-14 my-2 text-xl text-nord-14 font-bold">Cart</h2>
-        <div className="overflow-y-scroll">
+        <div className="overflow-y-scroll no-scrollbar">
         {cart.length === 0 ? (
           <p className="text-md text-nord-11">Nothing in Cart!</p>
         ) : (
