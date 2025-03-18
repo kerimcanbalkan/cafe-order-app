@@ -38,37 +38,37 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <DashboardLayout/>,
+    element: (
+      <RequireAuth allowedRole="admin">
+        <DashboardLayout/>
+      </RequireAuth>
+    ),
     children : [
       {
         index:true,
-        element:   (
-          <RequireAuth allowedRole="admin">
-            <AdminOverview />
-          </RequireAuth>
-        ),
+        element:<AdminOverview />,
         errorElement: <Error/>,
       },
       {
         path: "employees",
-        element: (
-          <RequireAuth allowedRole="admin">
-            <AdminEmployees/>
-          </RequireAuth>                                   
-        )
+        element:<AdminEmployees/>,
       }
     ]
   },
-    {
+  {
     path: "/waiter",
-    element: <DashboardLayout/>,
+    element: (
+      <RequireAuth allowedRole="waiter">
+        <DashboardLayout/>
+      </RequireAuth>
+    ),
     children : [
       {
         index:true,
         element:   (
-          <RequireAuth allowedRole="waiter">
-            <Waiter />
-          </RequireAuth>
+
+          <Waiter />
+
         ),
         errorElement: <Error/>,
       },
@@ -78,11 +78,16 @@ const router = createBrowserRouter([
     path: "/cashier",
     element: (
       <RequireAuth allowedRole="cashier">
-        <Cashier />
+        <DashboardLayout/>
       </RequireAuth>
-    )
-    ,
-    errorElement: <Error/>,
+    ),
+    children : [
+      {
+        index:true,
+        element:<Cashier />,
+        errorElement: <Error/>,
+      },
+    ]
   },
   {
     path: "*",

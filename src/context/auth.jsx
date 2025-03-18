@@ -6,7 +6,7 @@ import {useUser} from "./user";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
-  const [authed, setAuthed] = useState(false);
+  const [authed, setAuthed] = useState(null);
   const {updateUser, clearUser} = useUser();
 
   useEffect(() => {
@@ -23,6 +23,8 @@ export const AuthProvider = ({children}) => {
             setAuthed(false);
             clearUser();
           });
+    } else {
+      setAuthed(false);
     }
   }, []);
 
@@ -40,6 +42,8 @@ export const AuthProvider = ({children}) => {
 
       setAuthed(true);
       updateUser(user);
+
+      return user;
     } catch (error) {
       throw new Error("Invalid username or password");
     }

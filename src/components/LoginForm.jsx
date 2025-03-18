@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {useEffect, useState} from "react";
+import {useLayoutEffect, useState} from "react";
 import { useAlert } from "@/components/AlertProvider";
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from "@tanstack/react-query";
@@ -36,18 +36,24 @@ export function LoginForm({
       }
   }
 
-
-useEffect(() => {
-  if (authed) {
+useLayoutEffect(() => {
+  if (authed && user) {
         navigateUser(user.role);
   }
   },[authed, user])
 
   const mutation = useMutation({
-    mutationFn: () => { login(username,password) },
-    onSuccess: () => {navigateUser(user.Role)},
-    onError: () => {
+    mutationFn: () => login(username,password),
+    onSuccess: (usr) => {
+      if (usr) {
+        navigateUser(usr.role);
+      } else {
+        console.error("User data is missing after login");
+      }
+    },
+    onError: (error) => {
       showAlert("error", "Error!", "Wrong username or password.");
+      console.log("ERRRI", error)
       setUsername("");
       setPassword("");
     },
