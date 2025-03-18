@@ -7,10 +7,12 @@ export const UserProvider = ({children}) => {
 
   const updateUser = (userData) => {
     setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
   }
 
   const clearUser = () => {
     setUser(null);
+    localStorage.removeItem("user");
   }
 
   return (

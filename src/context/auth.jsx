@@ -12,17 +12,12 @@ export const AuthProvider = ({children}) => {
   useEffect(() => {
     // Check if token exists in localStorage on mount
     const token = localStorage.getItem("authToken");
-    if (token && !isTokenExpired()) {
-        getUserMe(token)
-          .then((user) => {
-            setAuthed(true);
-            updateUser(user);
-          })
-          .catch(() => {
-            localStorage.removeItem("authToken");
-            setAuthed(false);
-            clearUser();
-          });
+    const userJSON = localStorage.getItem("user");
+    const user = JSON.parse(userJSON);
+
+    if (token && !isTokenExpired() && user) {
+      setAuthed(true);
+      updateUser(user);;
     } else {
       setAuthed(false);
     }
