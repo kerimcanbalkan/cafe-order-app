@@ -19,7 +19,7 @@ export const AuthProvider = ({children}) => {
       setAuthed(true);
       updateUser(user);;
     } else {
-      setAuthed(false);
+      logout();
     }
   }, []);
 
