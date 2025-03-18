@@ -59,14 +59,20 @@ const router = createBrowserRouter([
       }
     ]
   },
-  {
+    {
     path: "/waiter",
-    element: (
-      <RequireAuth allowedRole="waiter">
-        <Waiter />
-      </RequireAuth>
-    ),
-    errorElement: <Error/>,
+    element: <DashboardLayout/>,
+    children : [
+      {
+        index:true,
+        element:   (
+          <RequireAuth allowedRole="waiter">
+            <Waiter />
+          </RequireAuth>
+        ),
+        errorElement: <Error/>,
+      },
+    ]
   },
   {
     path: "/cashier",

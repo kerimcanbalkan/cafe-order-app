@@ -1,6 +1,6 @@
 
 export default function AdminOverview() {
   return (
-    <h1 className="p-4">Overview</h1>
+    <h1 className="uppercase">Overview</h1>
   );
 }

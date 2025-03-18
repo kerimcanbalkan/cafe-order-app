@@ -1,3 +1,5 @@
 export default function Waiter() {
-  return <div>Waiter</div>;
+  return (
+    <h1 className="uppercase">Waiter</h1>
+  )
 }

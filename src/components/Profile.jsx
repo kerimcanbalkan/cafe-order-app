@@ -7,15 +7,17 @@ import {
 import { CircleUserRound } from "lucide-react";
 import { useAuth } from "@/context/auth";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "@/context/user";
 
 
 export default function Profile(){
   const navigate = useNavigate();
   const {logout} = useAuth();
+  const {user} = useUser();
   
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="cursor-pointer"><CircleUserRound size={26} className="text-nord-10"/></DropdownMenuTrigger>
+      <DropdownMenuTrigger className="cursor-pointer flex gap-2"><span className="text-nord-0 hover:underline">{user?.name}</span><CircleUserRound size={26} className="text-nord-10"/></DropdownMenuTrigger>
       <DropdownMenuContent className="text-nord-0">
         <DropdownMenuItem onClick={() => {navigate("#")}}>Profile</DropdownMenuItem>
         <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
