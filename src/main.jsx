@@ -11,6 +11,7 @@ import MenuLayout from "./components/layout/MenuLayout";
 import Error from "./pages/Error";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/context/auth";
+import { UserProvider } from "@/context/user";
 import RequireAuth from "@/components/RequireAuth";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import AdminEmployees from "@/pages/AdminEmployees";
@@ -85,10 +86,12 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-          </AuthProvider>
+    <UserProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </AuthProvider>
+    </UserProvider>
   </StrictMode>,
 );

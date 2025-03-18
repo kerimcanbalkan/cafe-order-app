@@ -1,11 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getUserMe } from "@/api/user";
 import { loginCall } from "@/api/auth";
+import {useUser} from "./user";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
-  const [authed, setAuthed] = useState({authed: false, role: null});
+  const [authed, setAuthed] = useState(false);
+  const {updateUser, clearUser} = useUser();
 
   useEffect(() => {
     // Check if token exists in localStorage on mount
@@ -13,11 +15,13 @@ export const AuthProvider = ({children}) => {
     if (token && !isTokenExpired()) {
         getUserMe(token)
           .then((user) => {
-            setAuthed({ authed: true, role: user.role });
+            setAuthed(true);
+            updateUser(user);
           })
           .catch(() => {
             localStorage.removeItem("authToken");
-            setAuthed({ authed: false, role: null });
+            setAuthed(false);
+            clearUser();
           });
     }
   }, []);
@@ -32,9 +36,10 @@ export const AuthProvider = ({children}) => {
       localStorage.setItem("tokenExpiration", expirationTime.toString());
 
       const user = await getUserMe(token);
-      if (!user || !user.role) throw new Error("Could not retrieve user details.");
+      if (!user) throw new Error("Could not retrieve user details.");
 
-      setAuthed({authed: true, role: user.role})
+      setAuthed(true);
+      updateUser(user);
     } catch (error) {
       throw new Error("Invalid username or password");
     }
@@ -42,11 +47,13 @@ export const AuthProvider = ({children}) => {
 
   const logout = () => {
     localStorage.removeItem("authToken");
-    setAuthed({ authed: false, role: null });
+    localStorage.removeItem("tokenExpiration");
+    setAuthed(false);
+    clearUser();
   };
 
   return (
-    <AuthContext.Provider value={{ ...authed, login, logout }}>
+    <AuthContext.Provider value={{ authed, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from "@tanstack/react-query";
 import Loading from "@/components/Loading";
 import { useAuth } from "@/context/auth";
+import { useUser } from "@/context/user";
 
 export function LoginForm({
   className,
@@ -18,10 +19,10 @@ export function LoginForm({
   const [password, setPassword] = useState("");
   const showAlert = useAlert();
   const navigate = useNavigate();
-  const {authed, role, login} = useAuth();
+  const {user} = useUser();
+  const {authed, login} = useAuth();
 
-  useEffect(() => {
-    if (authed) {
+  const navigateUser = (role) => {
       switch (role) {
       case "admin":
         navigate("/admin");
@@ -33,26 +34,20 @@ export function LoginForm({
         navigate("/cashier");
         break;
       }
-    }
-  },[authed, role])
+  }
+
+
+useEffect(() => {
+  if (authed) {
+        navigateUser(user.role);
+  }
+  },[authed, user])
 
   const mutation = useMutation({
     mutationFn: () => { login(username,password) },
-    onSuccess: () => {
-      switch (role) {
-        case "admin":
-          navigate("/admin");
-          break;
-        case "waiter":
-          navigate("/waiter");
-          break;
-        case "cashier":
-          navigate("/cashier");
-          break;
-      }
-    },
+    onSuccess: () => {navigateUser(user.Role)},
     onError: () => {
-      showAlert("error", "Error!", "Invalid username or password.");
+      showAlert("error", "Error!", "Wrong username or password.");
       setUsername("");
       setPassword("");
     },
