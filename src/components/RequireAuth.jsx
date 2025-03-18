@@ -11,10 +11,8 @@ function RequireAuth({ children, allowedRole }) {
 
   useLayoutEffect(() => {
     // Set isReady to true once the auth state and user data are fully loaded
-      console.log("when not ready", authed);
     if (authed !== null) {
       setIsReady(true);
-      console.log("when ready", authed);
     }
   }, [authed, user]);
 
