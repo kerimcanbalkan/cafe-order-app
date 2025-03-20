@@ -29,8 +29,8 @@ export function CartSidebar() {
             });
             return acc;
           }, [])
-        : [];
-    
+    : [];
+  
   return (
     <Sidebar side="right" variant="inset">
       <SidebarHeader className="flex items-end">
@@ -44,8 +44,8 @@ export function CartSidebar() {
             <h2 className="border-b border-nord-10 mb-2 text-xl font-bold text-nord-10">
               Active Order
             </h2>
-            {transformedOrder.map((item, index) => (
-              <div key={index} className="flex justify-between mb-2">
+            {transformedOrder.map((item) => (
+              <div key={item.menuItem.id} className="flex justify-between mb-2">
                 <p className="text-nord-1">{`${item.menuItem.name} x${item.quantity}`}</p>
                 <p className="font-bold text-nord-1">{`${item.menuItem.price * item.quantity}$`}</p>
               </div>
@@ -64,13 +64,13 @@ export function CartSidebar() {
           <p className="text-md text-nord-11">Nothing in Cart!</p>
         ) : (
           cart.map((item) => (
-            <CartMenuItemCard key={item.id} orderItem={item} className="mb-2" />
+            <CartMenuItemCard key={item.menuItem.id} orderItem={item} className="mb-2" />
           ))
         )}
         </div>
                 {cart.length === 0 ? (""): (
           <div>
-                        <p class="text-lg border-t border-nord-4 pt-3 text-nord-1 mt-2 flex justify-between">Total Price <span className="font-bold">{getCartTotal()}$</span></p>
+                        <p className="text-lg border-t border-nord-4 pt-3 text-nord-1 mt-2 flex justify-between">Total Price <span className="font-bold">{getCartTotal()}$</span></p>
             <Button className="bg-nord-11 hover:bg-nord-1 w-full mt-4 text-lg transition-transform duration-200 ease-in-out active:scale-90 focus:scale-100"onClick={clearCart}>Clear Cart</Button>
           </div>
         )}
