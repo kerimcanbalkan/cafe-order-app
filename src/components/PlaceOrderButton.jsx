@@ -11,12 +11,12 @@ import {useOrder} from "@/context/order";
 export default function PlaceOrderButton(){
   const showAlert = useAlert();
   const {cart, clearCart} = useCart();
-  const { tableNumber } = useParams();
+  const { tableID } = useParams();
   const { refetchOrder } = useOrder();
 
   const mutation = useMutation({
-    mutationFn: (cart, tableNumber) => {
-      return postOrder(cart,tableNumber);
+    mutationFn: (cart, tableID) => {
+      return postOrder(cart,tableID);
     },
     onError: (error) => {
       console.error("Error placing order:", error);
@@ -30,8 +30,8 @@ export default function PlaceOrderButton(){
   });
 
   const handlePlaceOrder = () => {
-    mutation.mutate({cart, tableNumber});
-    console.log("This is cart", cart, "This is table number", tableNumber);
+    mutation.mutate({cart, tableID});
+    console.log("This is cart", cart, "This is table ID", tableID);
   }
   
   return (

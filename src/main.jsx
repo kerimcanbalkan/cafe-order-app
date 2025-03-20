@@ -16,16 +16,22 @@ import RequireAuth from "@/components/RequireAuth";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import AdminEmployees from "@/pages/AdminEmployees";
 import AdminOverview from "@/pages/AdminOverview";
+import ValidateTable from "@/components/ValidateTable";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
-    path: "/order/:tableNumber",
-    element: <MenuLayout />,
+    path: "/order/:tableID",
+    element:
+      (
+        <ValidateTable>
+          <MenuLayout />                  
+        </ValidateTable>
+      ),
     children: [
       {
-      index: true,
+        index: true,
         element: <Menu/>,
         errorElement: <Error/>,
       }
