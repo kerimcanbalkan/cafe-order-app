@@ -33,7 +33,6 @@ export default function CartMenuItemCard({orderItem, className}){
 }
     
   return (
-    <>
       <Card className={className}>
         <CardHeader className="p-2">
           <div className="flex items-center justify-between">
@@ -52,6 +51,5 @@ export default function CartMenuItemCard({orderItem, className}){
           </div>
         </CardHeader>
       </Card>
-    </>
   )
 }
