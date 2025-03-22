@@ -17,6 +17,7 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import AdminEmployees from "@/pages/AdminEmployees";
 import AdminOverview from "@/pages/AdminOverview";
 import ValidateTable from "@/components/ValidateTable";
+import AdminNavMenu from "@/components/AdminNavMenu";
 
 const queryClient = new QueryClient();
 
@@ -46,7 +47,9 @@ const router = createBrowserRouter([
     path: "/admin",
     element: (
       <RequireAuth allowedRole="admin">
-        <DashboardLayout/>
+        <DashboardLayout>
+          <AdminNavMenu/>
+        </DashboardLayout>
       </RequireAuth>
     ),
     children : [
