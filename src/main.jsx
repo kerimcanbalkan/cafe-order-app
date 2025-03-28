@@ -14,10 +14,14 @@ import { AuthProvider } from "@/context/auth";
 import { UserProvider } from "@/context/user";
 import RequireAuth from "@/components/RequireAuth";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import AdminEmployees from "@/pages/AdminEmployees";
-import AdminOverview from "@/pages/AdminOverview";
 import ValidateTable from "@/components/ValidateTable";
 import AdminNavMenu from "@/components/AdminNavMenu";
+import AdminStatistics from "@/pages/AdminStatistics";
+import AdminMenu from "@/pages/AdminMenu";
+import AdminTables from "@/pages/AdminTables";
+import AdminOrders from "@/pages/AdminOrders";
+import AdminEmployees from "@/pages/AdminEmployees";
+
 
 const queryClient = new QueryClient();
 
@@ -47,16 +51,26 @@ const router = createBrowserRouter([
     path: "/admin",
     element: (
       <RequireAuth allowedRole="admin">
-        <DashboardLayout>
-          <AdminNavMenu/>
-        </DashboardLayout>
+        <DashboardLayout navMenu={<AdminNavMenu />} />
       </RequireAuth>
     ),
     children : [
       {
         index:true,
-        element:<AdminOverview />,
+        element:<AdminStatistics/>,
         errorElement: <Error/>,
+      },
+      {
+        path: "menu",
+        element:<AdminMenu/>,
+      },
+      {
+        path: "tables",
+        element:<AdminTables/>,
+      },
+      {
+        path: "orders",
+        element:<AdminOrders/>,
       },
       {
         path: "employees",
