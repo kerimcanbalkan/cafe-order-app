@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 export default function AdminNavMenu() {
   return (
-    <div className="mt-5 mb-5 border-nord-4 flex items-center justify-center p-1 shadow">
+    <div className="mt-5 mb-5 border-nord-4 flex items-center justify-center p-1">
       <ul className="flex items-center justify-center gap-5">
         <li>
           <NavLink
