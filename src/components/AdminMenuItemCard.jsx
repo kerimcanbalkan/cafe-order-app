@@ -5,6 +5,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Trash, Pencil } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 /**
  * Renders a clickable menuItem card that opens a details dialog.
@@ -38,8 +39,8 @@ export default function AdminMenuItemCard({ menuItem }) {
           <div className="flex justify-between items-center">
             <p className="text-nord-0 text-xs">${menuItem.price}</p>
             <div className="flex gap-2">
-            <Pencil className="text-nord-14" size={15}/>
-            <Trash className="text-nord-11"size={15}/>
+              <Pencil className="text-nord-14 cursor-pointer transition-transform duration-200 ease-in-out active:scale-50 focus:scale-100"size={15}/>
+              <Trash className="text-nord-11 cursor-pointer transition-transform duration-200 ease-in-out active:scale-50 focus:scale-100"size={15}/>
           </div>
           </div>
         </CardContent>
