@@ -37,7 +37,7 @@ export default function CartMenuItemCard({orderItem, className}){
         <CardHeader className="p-2">
           <div className="flex items-center justify-between">
             <img
-              src={`${import.meta.env.VITE_API_BASE_URL}/menu/images/${orderItem.menuItem.image}`}
+              src={`${import.meta.env.VITE_API_IMAGE_URL}/${orderItem.menuItem.image}`}
               alt="menuItem Image"
               className="w-10 h-10 object-cover rounded-md object-center"
             />

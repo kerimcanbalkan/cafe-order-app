@@ -33,7 +33,7 @@ function MenuItemDetailsCard({ className, open, setOpen, menuItem }) {
       <DialogContent className="p-8">
         <div className="relative">
           <img
-            src={`${import.meta.env.VITE_API_BASE_URL}/menu/images/${menuItem.image}`}
+            src={`${import.meta.env.VITE_API_IMAGE_URL}/${menuItem.image}`}
             alt="menuItem Image"
             className="w-full h-60 object-cover rounded-md object-center"
           />

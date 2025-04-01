@@ -25,7 +25,7 @@ export default function AdminMenuItemCard({ menuItem }) {
       >
         <CardContent className="p-4 flex flex-col ">
           <img
-            src={`${import.meta.env.VITE_API_BASE_URL}/menu/images/${menuItem.image}`}
+            src={`${import.meta.env.VITE_API_IMAGE_URL}/${menuItem.image}`}
             alt="menuItem Image"
 
             className="w-full h-24 object-cover rounded-md object-center transition duration-300 ease-in-out mb-1"
