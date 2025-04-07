@@ -4,8 +4,18 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { Trash, Pencil } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 /**
  * Renders a clickable menuItem card that opens a details dialog.
@@ -18,6 +28,8 @@ import { Button } from "@/components/ui/button";
  * @param {string} props.menuItem.image - The menuItem image url .
  */
 export default function AdminMenuItemCard({ menuItem }) {
+  const [open, setOpen] = useState(false);
+  
   return (
     <>
       <Card
@@ -40,11 +52,34 @@ export default function AdminMenuItemCard({ menuItem }) {
             <p className="text-nord-0 text-xs">${menuItem.price}</p>
             <div className="flex gap-2">
               <Pencil className="text-nord-14 cursor-pointer transition-transform duration-200 ease-in-out active:scale-50 focus:scale-100"size={15}/>
-              <Trash className="text-nord-11 cursor-pointer transition-transform duration-200 ease-in-out active:scale-50 focus:scale-100"size={15}/>
+              <Trash className="text-nord-11 cursor-pointer transition-transform duration-200 ease-in-out active:scale-50 focus:scale-100"size={15} onClick={() => {
+                setOpen(true);
+              }}/>
           </div>
           </div>
         </CardContent>
       </Card>
+      <DeleteModal open={open} setOpen={setOpen} itemName={menuItem.name}/>
     </>
+  );
+}
+
+
+const DeleteModal = ({open, setOpen, itemName}) => {
+  return (
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you sure you want to delete <span className="text-nord-11">{itemName}</span></AlertDialogTitle>
+          <AlertDialogDescription>
+           This action cannot be undone. This will permanently delete your menu item.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel className="text-white bg-nord-14 border-0 hover:bg-nord-14 hover:text-white">Cancel</AlertDialogCancel>
+          <AlertDialogAction className="text-white bg-nord-11 hover:bg-nord-11">Delete</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
