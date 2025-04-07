@@ -1,5 +1,4 @@
 import { Plus } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMenu } from "../api/menu";
 import Loading from "../components/Loading";
@@ -41,22 +40,6 @@ export default function AdminMenu() {
     );
 
   const menuItems = menu?.data || [];
-  const categories = [...new Set(menuItems.map((menuItem) => menuItem.category))];
-
-  
-  // Sort categories alphabetically, but for two-word categories, sort based on the second word
-  const sortedCategories = categories.sort((a, b) => {
-    const wordsA = a.split(' ');
-    const wordsB = b.split(' ');
-
-    // If both have two words, compare by the second word
-    if (wordsA.length === 2 && wordsB.length === 2) {
-      return wordsA[1].localeCompare(wordsB[1]);
-    }
-
-    // Otherwise, compare alphabetically
-    return a.localeCompare(b);
-  });
   
   return (
     <>
@@ -66,7 +49,7 @@ export default function AdminMenu() {
             <div className="container mx-auto my-10 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-1">
               {menuItems
                 .map((menuItem, index) => (
-                  <AdminMenuItemCard key={index} menuItem={menuItem} />
+                  <AdminMenuItemCard key={index} menuItem={menuItem} refetch={refetch} />
                 ))}
             </div>
     </>

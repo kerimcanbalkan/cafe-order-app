@@ -12,4 +12,3 @@ export const getUserMe = async (token) => {
     });
   return response.data.data;
 };
-
