@@ -1,10 +1,10 @@
 import { Plus } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchMenu } from "../api/menu";
-import Loading from "../components/Loading";
-import AdminMenuItemCard from "../components/AdminMenuItemCard";
-import { Button } from "../components/ui/button";
-import MenuItemDeleteDialog from "../components/MenuItemDeleteDialog";
+import { fetchMenu } from "@/api/menu";
+import Loading from "@/components/Loading";
+import AdminMenuItemCard from "@/components/AdminMenuItemCard";
+import { Button } from "@/components/ui/button";
+import MenuItemDeleteDialog from "@/components/MenuItemDeleteDialog";
 import { useState } from "react";
 
 export default function AdminMenu() {
@@ -54,7 +54,7 @@ export default function AdminMenu() {
   return (
     <>
       <div className="flex justify-end items-center border-b-1 border-nord-4 p-2">
-        <Button className="text-sm ftext-white bg-nord-10"><Plus/></Button>
+        <Button className="text-sm ftext-white bg-nord-10 hover:bg-nord-9"><Plus/></Button>
       </div>
       <div className="container mx-auto my-10 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-1">
         {menuItems
