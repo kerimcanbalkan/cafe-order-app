@@ -4,8 +4,18 @@ import { fetchMenu } from "../api/menu";
 import Loading from "../components/Loading";
 import AdminMenuItemCard from "../components/AdminMenuItemCard";
 import { Button } from "../components/ui/button";
+import MenuItemDeleteDialog from "../components/MenuItemDeleteDialog";
+import { useState } from "react";
 
 export default function AdminMenu() {
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const handleDelete = (item) => {
+    setSelectedItem(item);
+    setDeleteOpen(true);
+  }
+  
   const {
     data: menu,
     isLoading,
@@ -46,12 +56,13 @@ export default function AdminMenu() {
       <div className="flex justify-end items-center border-b-1 border-nord-4 p-2">
         <Button className="text-sm ftext-white bg-nord-10"><Plus/></Button>
       </div>
-            <div className="container mx-auto my-10 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-1">
-              {menuItems
-                .map((menuItem, index) => (
-                  <AdminMenuItemCard key={index} menuItem={menuItem} refetch={refetch} />
-                ))}
-            </div>
+      <div className="container mx-auto my-10 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-1">
+        {menuItems
+          .map((menuItem, index) => (
+            <AdminMenuItemCard key={index} menuItem={menuItem} onDeleteClick={handleDelete}/>
+          ))}
+      </div>
+      <MenuItemDeleteDialog menuItem={selectedItem} refetch={refetch} open={deleteOpen} setOpen={setDeleteOpen}/>
     </>
   );
 }
