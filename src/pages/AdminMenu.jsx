@@ -5,15 +5,21 @@ import Loading from "@/components/Loading";
 import AdminMenuItemCard from "@/components/AdminMenuItemCard";
 import { Button } from "@/components/ui/button";
 import MenuItemDeleteDialog from "@/components/MenuItemDeleteDialog";
+import MenuItemAddDialog from "@/components/MenuItemAddDialog";
 import { useState } from "react";
 
 export default function AdminMenu() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [addOpen, setAddOpen] = useState(false);
 
   const handleDelete = (item) => {
     setSelectedItem(item);
     setDeleteOpen(true);
+  }
+
+  const handleAdd = (item) => {
+    setAddOpen(true);
   }
   
   const {
@@ -54,7 +60,7 @@ export default function AdminMenu() {
   return (
     <>
       <div className="flex justify-end items-center border-b-1 border-nord-4 p-2">
-        <Button className="text-sm ftext-white bg-nord-10 hover:bg-nord-9"><Plus/></Button>
+        <Button onClick={handleAdd} className="text-sm ftext-white bg-nord-10 hover:bg-nord-9"><Plus/></Button>
       </div>
       <div className="container mx-auto my-10 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-1">
         {menuItems
@@ -63,6 +69,7 @@ export default function AdminMenu() {
           ))}
       </div>
       <MenuItemDeleteDialog menuItem={selectedItem} refetch={refetch} open={deleteOpen} setOpen={setDeleteOpen}/>
+      <MenuItemAddDialog menuItem={selectedItem} refetch={refetch} open={addOpen} setOpen={setAddOpen}/>
     </>
   );
 }

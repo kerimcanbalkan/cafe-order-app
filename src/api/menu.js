@@ -14,7 +14,6 @@ export const deleteMenuItem = async ({token, id}) => {
     throw new Error("No auth token provided");
   }
 
-  console.log("Sending delete request for "+id+"with token "+token);
   const response = await api.delete(`/menu/${id}`, {
     headers: {
        Authorization: `Bearer ${token}`,
@@ -22,3 +21,19 @@ export const deleteMenuItem = async ({token, id}) => {
   });
   return response.data;
 }
+
+export const addMenuItem = async ({ token, menuItem }) => {
+  if (!token) {
+    throw new Error("No auth token provided");
+  }
+
+  const response = await api.post("/menu", menuItem, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response.data;
+};
+
