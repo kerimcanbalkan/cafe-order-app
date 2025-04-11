@@ -15,7 +15,7 @@ import { Trash, Pencil } from "lucide-react";
  * @param {number} props.menuItem.price - The menuItem price.
  * @param {string} props.menuItem.image - The menuItem image url .
  */
-export default function AdminMenuItemCard({ menuItem, onDeleteClick }) {
+export default function AdminMenuItemCard({ menuItem, onDeleteClick, onEditClick }) {
   return (
     <>
       <Card
@@ -28,17 +28,17 @@ export default function AdminMenuItemCard({ menuItem, onDeleteClick }) {
 
             className="w-full h-24 object-cover rounded-md object-center transition duration-300 ease-in-out mb-1"
           />
-          <CardTitle className="text-sm font-semibold text-nord-0 truncate">
+          <CardTitle className="text-md font-semibold text-nord-0 truncate">
             {menuItem.name}
           </CardTitle>
-          <CardDescription className="mb-1 text-xs text-nord-11 truncate">
+          <CardDescription className="mb-1 text-sm text-nord-11 truncate">
             {menuItem.category}
           </CardDescription>
           <div className="flex justify-between items-center">
-            <p className="text-nord-0 text-xs">${menuItem.price}</p>
+            <p className="text-nord-0 text-sm">${menuItem.price}</p>
             <div className="flex gap-2">
-              <Pencil className="text-nord-14 cursor-pointer transition-transform duration-200 ease-in-out active:scale-90 focus:scale-100"size={15}/>
-              <Trash className="text-nord-11 cursor-pointer transition-transform duration-200 ease-in-out active:scale-90 focus:scale-100"size={15} onClick={() => {
+              <Pencil className="text-nord-14 cursor-pointer transition-transform duration-200 ease-in-out active:scale-90 focus:scale-100"size={20} onClick={() =>{onEditClick(menuItem)}}/>
+              <Trash className="text-nord-11 cursor-pointer transition-transform duration-200 ease-in-out active:scale-90 focus:scale-100"size={20} onClick={() => {
                 onDeleteClick(menuItem);
               }}/>
           </div>
