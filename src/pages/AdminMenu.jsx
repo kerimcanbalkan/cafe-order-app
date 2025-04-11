@@ -18,7 +18,7 @@ export default function AdminMenu() {
     setDeleteOpen(true);
   }
 
-  const handleAdd = (item) => {
+  const handleAdd = () => {
     setAddOpen(true);
   }
   
@@ -60,9 +60,9 @@ export default function AdminMenu() {
   return (
     <>
       <div className="flex justify-end items-center border-b-1 border-nord-4 p-2">
-        <Button onClick={handleAdd} className="text-sm ftext-white bg-nord-10 hover:bg-nord-9"><Plus/></Button>
+        <Button onClick={handleAdd} className="text-sm text-white bg-nord-10 hover:bg-nord-9"><Plus/></Button>
       </div>
-      <div className="container mx-auto my-10 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-1">
+      <div className="container mx-auto my-5 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-1">
         {menuItems
           .map((menuItem, index) => (
             <AdminMenuItemCard key={index} menuItem={menuItem} onDeleteClick={handleDelete}/>
