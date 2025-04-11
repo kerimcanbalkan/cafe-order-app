@@ -4,7 +4,7 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-import { Trash, Pencil } from "lucide-react";
+import { Trash } from "lucide-react";
 /**
  * Renders a clickable menuItem card that opens a details dialog.
  * @param {Object} props - The component props.
@@ -15,7 +15,7 @@ import { Trash, Pencil } from "lucide-react";
  * @param {number} props.menuItem.price - The menuItem price.
  * @param {string} props.menuItem.image - The menuItem image url .
  */
-export default function AdminMenuItemCard({ menuItem, onDeleteClick, onEditClick }) {
+export default function AdminMenuItemCard({ menuItem, onDeleteClick }) {
   return (
     <>
       <Card
@@ -37,7 +37,6 @@ export default function AdminMenuItemCard({ menuItem, onDeleteClick, onEditClick
           <div className="flex justify-between items-center">
             <p className="text-nord-0 text-sm">${menuItem.price}</p>
             <div className="flex gap-2">
-              <Pencil className="text-nord-14 cursor-pointer transition-transform duration-200 ease-in-out active:scale-90 focus:scale-100"size={20} onClick={() =>{onEditClick(menuItem)}}/>
               <Trash className="text-nord-11 cursor-pointer transition-transform duration-200 ease-in-out active:scale-90 focus:scale-100"size={20} onClick={() => {
                 onDeleteClick(menuItem);
               }}/>
