@@ -34,6 +34,9 @@ export default function AdminMenuItemCard({ menuItem, onDeleteClick }) {
           <CardDescription className="mb-1 text-sm text-nord-11 truncate">
             {menuItem.category}
           </CardDescription>
+          <CardDescription className="mb-1 text-sm text-nord-0 truncate">
+            {menuItem.description}
+          </CardDescription>
           <div className="flex justify-between items-center">
             <p className="text-nord-0 text-sm">${menuItem.price}</p>
             <div className="flex gap-2">
