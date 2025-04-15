@@ -78,7 +78,7 @@ const  [selectedMenuItem, setSelectedMenuItem] = useState(null);
         </TabsList>
         {categories.map((category) => (
           <TabsContent key={category} value={category}>
-            <div className="container mx-auto my-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-8">
+            <div className="container mx-auto my-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 px-8">
               {menuItems
                 .filter((menuItem) => menuItem.category === category)
                 .map((menuItem, index) => (

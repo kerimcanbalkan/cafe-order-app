@@ -5,8 +5,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MenuItemDetailsCard } from "@/components/MenuItemDetailsCard";
-import { useState } from "react";
 import { Plus } from "lucide-react";
 import { useCart } from "@/context/cart";
 import { useAlert } from "@/components/AlertProvider";
@@ -45,21 +43,20 @@ function MenuItemCard({ menuItem, setSelectedMenuItem, setOpenDetails }) {
           <img
             src={`${import.meta.env.VITE_API_IMAGE_URL}/${menuItem.image}`}
             alt="menuItem Image"
-
-            className="w-full h-48 object-cover rounded-md object-center transition duration-300 ease-in-out mb-1"
+            className="w-full h-24 md:h-36 lg:h-48 object-cover rounded-md object-center transition duration-300 ease-in-out mb-1"
           />
-          <CardTitle className="text-xl font-semibold text-nord-0 truncate">
+          <CardTitle className="text-md font-semibold text-nord-0 truncate">
             {menuItem.name}
           </CardTitle>
           <CardDescription className="mb-1 text-nord-11 truncate">
             {menuItem.category}
           </CardDescription>
           <div className="flex justify-between items-center">
-            <p className="text-nord-0">${menuItem.price}</p>
+            <p className="text-nord-0 font-bold">${menuItem.price}</p>
             <Button className="text-white bg-nord-11 rounded-md hover:bg-nord-1 
              transition-transform duration-200 ease-in-out 
-             active:scale-90 focus:scale-100" onClick={(e) => {handlePlusButtonClick(e)}}>
-              <Plus />
+            active:scale-90 focus:scale-100 p-4 text-sm md:text-md lg:text-lg" onClick={(e) => {handlePlusButtonClick(e)}}>
+              +
             </Button>
           </div>
         </CardContent>
