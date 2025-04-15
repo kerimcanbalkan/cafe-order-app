@@ -1,13 +1,11 @@
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  } from "@/components/ui/dialog";
 import { useMutation } from "@tanstack/react-query";
 import { addMenuItem } from "@/api/menu";
 import Loading from "@/components/Loading";
@@ -15,6 +13,7 @@ import { useAlert } from "@/components/AlertProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {z} from "zod";
 import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -84,16 +83,18 @@ export default function MenuItemAddDialog({open, setOpen, refetch}) {
 
     mutation.mutate({token: token, menuItem: formData});
     console.log("Creating menu item ", formData);
+
+    form.reset();
   };
   
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Add menu item</AlertDialogTitle>
-          <AlertDialogDescription>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Add menu item</DialogTitle>
+          <DialogDescription>
            Create and add a menu item to the menu
-          </AlertDialogDescription>
+          </DialogDescription>
             <Form {...form}>
               <form
                 id="menu-item-form"
@@ -176,14 +177,18 @@ export default function MenuItemAddDialog({open, setOpen, refetch}) {
                 />
               </form>
             </Form>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel className="text-white bg-nord-11 hover:bg-nord-11 hover:text-white">Cancel</AlertDialogCancel>
-          <AlertDialogAction className="text-white bg-nord-14 hover:bg-nord-14" type="submit" form="menu-item-form">
+        </DialogHeader>
+        <DialogFooter>
+          <Button className="text-white bg-nord-11 hover:bg-nord-11 hover:text-white" onClick={
+            () => {
+              setOpen(false);
+            }
+          }>Cancel</Button>
+          <Button className="text-white bg-nord-14 hover:bg-nord-14" type="submit" form="menu-item-form">
             {mutation.isPending ? <Loading/> : 'Save'}
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
