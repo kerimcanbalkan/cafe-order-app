@@ -17,7 +17,7 @@ export function AlertProvider({ children }) {
     <AlertContext.Provider value={showAlert}>
       {children}
       {alert && (
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-80">
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-[9999] w-80">
           <Alert
             className={cn("shadow-sm", {
               "bg-nord-14 text-white": alert.type === "success",
