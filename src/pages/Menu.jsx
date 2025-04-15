@@ -3,9 +3,14 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchMenu } from "../api/menu";
 import Loading from "../components/Loading";
 import { MenuItemCard } from "../components/MenuItemCard";
+import { MenuItemDetailsCard } from "../components/MenuItemDetailsCard";
 import { Button } from "../components/ui/button";
+import { useState } from "react";
 
 export default function Menu() {
+const  [openDetails, setOpenDetails] = useState(false);
+const  [selectedMenuItem, setSelectedMenuItem] = useState(null);
+  
   const {
     data: menu,
     isLoading,
@@ -77,12 +82,19 @@ export default function Menu() {
               {menuItems
                 .filter((menuItem) => menuItem.category === category)
                 .map((menuItem, index) => (
-                  <MenuItemCard key={index} menuItem={menuItem} />
+                  <MenuItemCard key={index} menuItem={menuItem} setOpenDetails={setOpenDetails} setSelectedMenuItem={setSelectedMenuItem} />
               ))}
             </div>
           </TabsContent>
         ))}
       </Tabs>
+      {selectedMenuItem && (
+        <MenuItemDetailsCard
+          open={openDetails}
+          setOpen={setOpenDetails}
+          menuItem={selectedMenuItem}
+        />
+      )}
     </>
   );
 }

@@ -21,8 +21,7 @@ import { useAlert } from "@/components/AlertProvider";
  * @param {number} props.menuItem.price - The menuItem price.
  * @param {string} props.menuItem.image - The menuItem image url .
  */
-function MenuItemCard({ menuItem }) {
-  const [open, setOpen] = useState(false);
+function MenuItemCard({ menuItem, setSelectedMenuItem, setOpenDetails }) {
   const {addToCart} = useCart();
   const showAlert = useAlert();
 
@@ -38,7 +37,8 @@ function MenuItemCard({ menuItem }) {
       <Card
         className="rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1"
         onClick={() => {
-          setOpen(true);
+          setOpenDetails(true);
+          setSelectedMenuItem(menuItem);
         }}        
       >
         <CardContent className="p-4 flex flex-col ">
@@ -64,7 +64,6 @@ function MenuItemCard({ menuItem }) {
           </div>
         </CardContent>
       </Card>
-      <MenuItemDetailsCard open={open} setOpen={setOpen} menuItem={menuItem} />
     </>
   );
 }
