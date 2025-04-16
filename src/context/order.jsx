@@ -1,18 +1,18 @@
 import { createContext, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getActiveOrder } from "../api/order";
+import { getActiveOrder } from "@/api/order";
 import { useParams } from "react-router-dom";
 
 export const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
-  const { tableNumber } = useParams();
+  const { tableID } = useParams();
   
   // Fetch active order from database
   const { data: order = [], refetch } = useQuery({
-    queryKey: ["order", tableNumber],
+    queryKey: ["order", tableID],
     queryFn: async () => {
-      const response = await getActiveOrder(tableNumber);
+      const response = await getActiveOrder(tableID);
       return response?.data || [];
     },
   });
