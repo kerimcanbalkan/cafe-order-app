@@ -19,3 +19,28 @@ export const getTables = async ({token}) => {
 
   return response.data;
 }
+
+export const createTable = async ({token, table}) => {
+  if (!token) {
+    throw new Error("No auth token provided");
+  }
+
+  const response = await api.post("/table",table, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    }
+  });
+
+  return response.data;
+}
+
+export const deleteTableById = async ({token, tableID}) => {
+  if (!token) {
+    throw new Error("No auth token provided");
+  }
+
+  const response = await api.delete(`/table/${tableID}`);
+
+  return response.data;
+}
