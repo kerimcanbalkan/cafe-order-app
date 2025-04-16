@@ -1,7 +1,6 @@
- import {
+import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -11,13 +10,18 @@ import { Button } from "@/components/ui/button";
 import Loading from "@/components/Loading";
 import { getTables } from "@/api/table";
 import { useQuery } from "@tanstack/react-query";
- import { Trash, ExternalLink, CirclePlus } from "lucide-react";
+import { Trash, ExternalLink, CirclePlus } from "lucide-react";
+import { deleteTableById } from "@/api/table";
+import {useAlert} from "@/components/AlertProvider";
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
+import TableAddDialog from "../components/TableAddDialog";
+ 
 
 export default function AdminTables() {
-  
+  const [open, setOpen] = useState(false);
+  const showAlert = useAlert();
   const orderBaseUrl = `${window.location.origin}/order`;
-
-
   const token = localStorage.getItem("authToken");
   
   const {
@@ -28,6 +32,20 @@ export default function AdminTables() {
   } = useQuery({
     queryKey: ["table"],
     queryFn: () => getTables({ token }),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: ({ token, tableID }) => {
+      return deleteTableById({ token, tableID });
+    },
+    onError: (error) => {
+      console.error("Error deleting table", error);
+      showAlert("error", "Error!", "Could not delete table!");
+    },
+    onSuccess: () => {
+      showAlert("success", "Success!", "Table deleted successfully");
+      refetch(); // optional: refresh the table list
+    }
   });
 
   if (isLoading)
@@ -54,16 +72,18 @@ export default function AdminTables() {
     );
 
   const allTables = tables?.data || [];
+
+
   
   return (
+    <>
       <Table className="text-nord-0">
-      <TableCaption>Tables</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead>Name</TableHead>
-          <TableHead>Created At</TableHead>
-          <TableHead>Link</TableHead>
-          <TableHead><CirclePlus size={20} className="text-nord-0"/></TableHead>
+          <TableHead className="text-lg">Name</TableHead>
+          <TableHead className="text-lg">Created At</TableHead>
+          <TableHead className="text-lg">Link</TableHead>
+          <TableHead><CirclePlus size={25} className="text-nord-15 cursor-pointer" onClick={() => {setOpen(true)}}/></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -72,10 +92,14 @@ export default function AdminTables() {
             <TableCell>{table.name}</TableCell>
             <TableCell>{new Date(table.createdAt).toLocaleDateString("en-GB")}</TableCell>
             <TableCell><a className="text-nord-10"href={`${orderBaseUrl}/${table.id}`}><ExternalLink/></a></TableCell>
-            <TableCell><Trash className="text-nord-11" size={20}/></TableCell>
+            <TableCell>
+                {deleteMutation.isPending ? <Loading/> : <Trash size={20} className="text-nord-11 cursor-pointer" disabled={deleteMutation.isLoading} onClick={() => deleteMutation.mutate({ token, tableID: table.id })}/> }                
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
-    </Table>
+      </Table>
+      <TableAddDialog open={open} setOpen={setOpen} refetch={refetch}/>
+    </>
   );
 }

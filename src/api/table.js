@@ -40,7 +40,11 @@ export const deleteTableById = async ({token, tableID}) => {
     throw new Error("No auth token provided");
   }
 
-  const response = await api.delete(`/table/${tableID}`);
+  const response = await api.delete(`/table/${tableID}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  });
 
   return response.data;
 }
