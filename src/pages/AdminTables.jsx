@@ -72,6 +72,7 @@ export default function AdminTables() {
     );
 
   const allTables = tables?.data || [];
+  const sortedTables = allTables.sort((a, b) => a.name.localeCompare(b.name));
 
 
   
@@ -87,7 +88,7 @@ export default function AdminTables() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {allTables.map((table) => (
+        {sortedTables.map((table) => (
           <TableRow key={table.id}>
             <TableCell>{table.name}</TableCell>
             <TableCell>{new Date(table.createdAt).toLocaleDateString("en-GB")}</TableCell>
