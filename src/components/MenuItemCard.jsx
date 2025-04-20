@@ -5,7 +5,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
 import { useCart } from "@/context/cart";
 import { useAlert } from "@/components/AlertProvider";
 
@@ -18,6 +17,8 @@ import { useAlert } from "@/components/AlertProvider";
  * @param {string} props.menuItem.category - The menuItem caregory.
  * @param {number} props.menuItem.price - The menuItem price.
  * @param {string} props.menuItem.image - The menuItem image url .
+ * @param {function(): void} props.setSelectedMenuItem - For sharing the seleted item state with the parent component.
+ * @param {function(): void} props.setOpenDetails - For sharing the open state of the MenuItemDetails card with the parent component.
  */
 function MenuItemCard({ menuItem, setSelectedMenuItem, setOpenDetails }) {
   const {addToCart} = useCart();
