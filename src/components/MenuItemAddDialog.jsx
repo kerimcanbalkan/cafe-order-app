@@ -44,6 +44,13 @@ const formSchema = z.object({
     )
 });
 
+/**
+ * Displays form inside a dialog
+ * @param {Object} props - The component props
+ * @param {boolean} props.open - Controls whether the dialog is open
+ * @param {function(boolean): void} props.setOpen - Function to toggler the dialog open state.
+ * @param {function(): void} props.refetch - Function taken from the mutation to refetch the data from the parent
+ */
 export default function MenuItemAddDialog({open, setOpen, refetch}) {
   const showAlert = useAlert();
   const token = localStorage.getItem("authToken");

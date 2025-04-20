@@ -9,6 +9,7 @@ import { useAlert } from "@/components/AlertProvider";
 /**
  * Displays the menuItem details inside a dialog.
  * @param {Object} props - The component props.
+ * @param {string} props.className - Tailwind classes for styling of the component
  * @param {boolean} props.open - Controls whether the dialog is open.
  * @param {function(boolean):void} props.setOpen - Function to toggle the dialog open state.
  * @param {Object} props.menuItem - The product details.

@@ -13,6 +13,19 @@ import { deleteMenuItem } from "@/api/menu";
 import Loading from "@/components/Loading";
 import { useAlert } from "@/components/AlertProvider";
 
+/**
+ * Displays alert dialog for confirming the deletion of item
+ * @param {Object} props - The component props
+ * @param {boolean} props.open - Controls whether the dialog is open
+ * @param {function(boolean): void} props.setOpen - Function to toggler the dialog open state.
+ * @param {Object} props.menuItem - The menuItem that is being deleted.
+ * @param {string} props.menuItem.name - The menuItem name.
+ * @param {string} props.menuItem.description - The menuItem description.
+ * @param {string} props.menuItem.category - The menuItem caregory.
+ * @param {number} props.menuItem.price - The menuItem price.
+ * @param {string} props.menuItem.image - The menuItem image url .
+ * @param {function(): void} props.refetch - Function taken from the mutation to refetch the data from the parent
+ */
 export default function MenuItemDeleteDialog({open, setOpen, menuItem, refetch}) {
   const showAlert = useAlert();
   const token = localStorage.getItem("authToken");

@@ -15,6 +15,7 @@ import {useCart} from "@/context/cart";
  * @param {number} props.orderItem.menuItem.price - The menu item price.
  * @param {string} props.orderItem.menuItem.image - The menu item image URL.
  * @param {number} props.orderItem.quantity - The quantity of the ordered menu item.
+ * @param {string} props.className - The tailwind classes for the styling
  */
 export default function CartMenuItemCard({orderItem, className}){
   const { addToCart, removeFromCart } = useCart();
