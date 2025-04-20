@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/card";
 import { Trash } from "lucide-react";
 /**
- * Renders a clickable menuItem card that opens a details dialog.
+ * Renders a clickable menuItem card.
  * @param {Object} props - The component props.
  * @param {Object} props.menuItem - The menuItem details.
  * @param {string} props.menuItem.name - The menuItem name.
@@ -14,6 +14,7 @@ import { Trash } from "lucide-react";
  * @param {string} props.menuItem.category - The menuItem caregory.
  * @param {number} props.menuItem.price - The menuItem price.
  * @param {string} props.menuItem.image - The menuItem image url .
+ * @param {function(): void} props.onDeleteClick - Function to trigger when the delete button is clicked.
  */
 export default function AdminMenuItemCard({ menuItem, onDeleteClick }) {
   return (
