@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import MenuItemDeleteDialog from "@/components/MenuItemDeleteDialog";
 import MenuItemAddDialog from "@/components/MenuItemAddDialog";
 import { useState } from "react";
+import { CirclePlus } from "lucide-react";
 
 export default function AdminMenu() {
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -60,7 +61,8 @@ export default function AdminMenu() {
   return (
     <>
       <div className="flex justify-end items-center border-b-1 border-nord-4 p-2">
-        <Button onClick={handleAdd} className="text-sm text-white bg-nord-10 hover:bg-nord-9"><Plus/></Button>
+        <CirclePlus onClick={handleAdd} size={28} className="text-nord-10 transition-transform duration-200 ease-in-out 
+            active:scale-90 focus:scale-100"/>
       </div>
       <div className="container mx-auto my-5 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-1">
         {menuItems
