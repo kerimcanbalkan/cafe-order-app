@@ -14,7 +14,7 @@ import { useAlert } from "@/components/AlertProvider";
  * @param {Object} props.menuItem - The menuItem details.
  * @param {string} props.menuItem.name - The menuItem name.
  * @param {string} props.menuItem.description - The menuItem description.
- * @param {string} props.menuItem.category - The menuItem caregory.
+ * @param {string} props.menuItem.category - The menuItem category.
  * @param {number} props.menuItem.price - The menuItem price.
  * @param {string} props.menuItem.image - The menuItem image url .
  * @param {function(menuItem): void} props.setSelectedMenuItem - For sharing the seleted item state with the parent component.
