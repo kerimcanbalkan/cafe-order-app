@@ -5,11 +5,16 @@ import { Button } from "@/components/ui/button";
 import EmployeeCard from "@/components/EmployeeCard";
 import EmployeeDetailsDialog from "@/components/EmployeeDetailsDialog";
 import { useState } from "react";
+import { CirclePlus } from "lucide-react";
 
 export default function AdminEmployees(){
   const [userDetailsOpen, setUserDetailsOpen] = useState(false);
   const [clickedUser, setClickedUser] = useState(null);
   const token = localStorage.getItem("authToken");
+
+  const handleAdd = () => {
+    console.log("clicked");
+  }
 
   const {
     data: users,
@@ -49,14 +54,21 @@ export default function AdminEmployees(){
     );
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-8">
-      {sortedUsers.map((user, index) => (
-        <EmployeeCard key={index} user={user} setUser={setClickedUser} setOpenDetails={setUserDetailsOpen}/>
-      ))}
+    <div>
+      <div className="flex justify-end items-center border-b-1 border-nord-4 p-2 mb-5">
+        <CirclePlus onClick={handleAdd} size={28} className="text-nord-10 transition-transform duration-200 ease-in-out 
+        active:scale-90 focus:scale-100"/>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-8">
+              
+        {sortedUsers.map((user, index) => (
+          <EmployeeCard key={index} user={user} setUser={setClickedUser} setOpenDetails={setUserDetailsOpen}/>
+        ))}
 
-      {clickedUser && (
-              <EmployeeDetailsDialog open={userDetailsOpen} setOpen={setUserDetailsOpen} user={clickedUser}/>
-      )}
+        {clickedUser && (
+          <EmployeeDetailsDialog open={userDetailsOpen} setOpen={setUserDetailsOpen} user={clickedUser}/>
+        )}
+      </div>
     </div>
   )
 }
