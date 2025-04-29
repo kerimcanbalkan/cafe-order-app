@@ -31,3 +31,21 @@ export const getAllUsers = async ({token}) => {
 
   return response.data;
 }
+
+// Requires admin
+export const createUser = async ({token, user}) => {
+  if (!token) {
+    throw new Error("No auth token provided");
+  }
+
+  console.log("Sending request with this data", user);
+
+  const response = await api.post("/user", user, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response.data;
+};

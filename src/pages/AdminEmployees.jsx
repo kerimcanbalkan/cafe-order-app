@@ -6,14 +6,16 @@ import EmployeeCard from "@/components/EmployeeCard";
 import EmployeeDetailsDialog from "@/components/EmployeeDetailsDialog";
 import { useState } from "react";
 import { CirclePlus } from "lucide-react";
+import EmployeeAddDialog from "../components/EmployeeAddDialog";
 
 export default function AdminEmployees(){
   const [userDetailsOpen, setUserDetailsOpen] = useState(false);
+  const [userAddOpen, setUserAddOpen] = useState(false);
   const [clickedUser, setClickedUser] = useState(null);
   const token = localStorage.getItem("authToken");
 
   const handleAdd = () => {
-    console.log("clicked");
+    setUserAddOpen(true);
   }
 
   const {
@@ -67,6 +69,10 @@ export default function AdminEmployees(){
 
         {clickedUser && (
           <EmployeeDetailsDialog open={userDetailsOpen} setOpen={setUserDetailsOpen} user={clickedUser}/>
+        )}
+
+        {userAddOpen && (
+          <EmployeeAddDialog open={userAddOpen} setOpen={setUserAddOpen} refetch={refetch}/>
         )}
       </div>
     </div>

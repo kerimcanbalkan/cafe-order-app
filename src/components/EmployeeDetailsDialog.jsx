@@ -22,14 +22,14 @@ export default function EmployeeDetailsDialog({ open, setOpen, user}) {
       <DialogContent className="p-4">
         <DialogTitle className="text-nord-10">Employee Details</DialogTitle>
         <div className="flex flex-col gap-1">
-          <p><span className="font-bold text-lg">ID: </span>{user.id}</p>
-          <p><span className="font-bold text-lg">Name: </span>{user.name}</p>
-          <p><span className="font-bold text-lg">Surname: </span>{user.surname}</p>
-          <p><span className="font-bold text-lg">Gender: </span>{capitalize(user.gender)}</p>
-          <p><span className="font-bold text-lg">Email: </span>{user.email}</p>
-          <p><span className="font-bold text-lg">Username: </span>{user.username}</p>
-          <p><span className="font-bold text-lg">Role: </span>{capitalize(user.role)}</p>
-          <p><span className="font-bold text-lg">Started At: </span>{new Date(user.createdAt).toLocaleString("en-GB")}</p>
+          <p><span className="font-bold">ID: </span>{user.id}</p>
+          <p><span className="font-bold">Name: </span>{user.name}</p>
+          <p><span className="font-bold">Surname: </span>{user.surname}</p>
+          <p><span className="font-bold">Gender: </span>{capitalize(user.gender)}</p>
+          <p><span className="font-bold">Email: </span>{user.email}</p>
+          <p><span className="font-bold">Username: </span>{user.username}</p>
+          <p><span className="font-bold">Role: </span>{capitalize(user.role)}</p>
+          <p><span className="font-bold">Started At: </span>{new Date(user.createdAt).toLocaleString("en-GB")}</p>
         </div>
         <DialogFooter>
           <Button className="text-white bg-nord-14 hover:bg-nord-14">Check Statistics</Button>
