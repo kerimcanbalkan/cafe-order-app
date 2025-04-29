@@ -2,9 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllUsers } from "@/api/user";
 import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
-import EmployeeCard from "../components/EmployeeCard";
+import EmployeeCard from "@/components/EmployeeCard";
+import EmployeeDetailsDialog from "@/components/EmployeeDetailsDialog";
+import { useState } from "react";
 
 export default function AdminEmployees(){
+  const [userDetailsOpen, setUserDetailsOpen] = useState(false);
+  const [clickedUser, setClickedUser] = useState(null);
   const token = localStorage.getItem("authToken");
 
   const {
@@ -47,8 +51,12 @@ export default function AdminEmployees(){
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-8">
       {sortedUsers.map((user, index) => (
-        <EmployeeCard key={index} user={user}/>
+        <EmployeeCard key={index} user={user} setUser={setClickedUser} setOpenDetails={setUserDetailsOpen}/>
       ))}
+
+      {clickedUser && (
+              <EmployeeDetailsDialog open={userDetailsOpen} setOpen={setUserDetailsOpen} user={clickedUser}/>
+      )}
     </div>
   )
 }

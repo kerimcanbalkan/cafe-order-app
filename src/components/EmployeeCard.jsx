@@ -17,13 +17,20 @@ import {
  * @param {string} props.user.username - The username of the employee.
  * @param {string} props.user.role - The employee role.
  * @param {string} props.user.createdAt - The employee user creation date.
+ * @param {function(boolean): void} props.setOpenDetails - For sharing the open state of the EmployeeDetailsDialog with the parent component.
+  * @param {function(user): void} props.setUser - For sharing the user state with the EmployeeDetailsCard
  */
-export default function EmployeeCard({ user }){
+export default function EmployeeCard({ user, setUser, setOpenDetails }){
   
   return (
     <>
       <Card
-        className={`rounded-lg overflow-hidden shadow-sm ${getShadowClass(user.role)} hover:shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 cursor-pointer`}>
+        className={`rounded-lg overflow-hidden shadow-sm ${getShadowClass(user.role)} hover:shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 cursor-pointer`}
+        onClick={() => {
+          setUser(user);
+          setOpenDetails(true);
+        }}
+      >
         <CardContent className="p-4 flex flex-col ">
           <CardTitle className="text-lg font-semibold text-nord-0">
             {`${user.name} ${user.surname}`}
