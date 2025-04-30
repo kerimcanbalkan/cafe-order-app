@@ -1,5 +1,7 @@
-import { Dialog, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogFooter, DialogTitle} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import EmployeeDeleteDialog from "@/components/EmployeeDeleteDialog";
 
 /**
  * Displays employee details and allows to delete the employee data.
@@ -16,7 +18,9 @@ import { Button } from "@/components/ui/button";
  * @param {string} props.user.role - The role (admin, cashier or waiter) of the user.
  * @param {string} props.user.createdAt - The users creation date.
  */
-export default function EmployeeDetailsDialog({ open, setOpen, user}) {
+export default function EmployeeDetailsDialog({ open, setOpen, user, refetch}) {
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="p-4">
@@ -33,9 +37,13 @@ export default function EmployeeDetailsDialog({ open, setOpen, user}) {
         </div>
         <DialogFooter>
           <Button className="text-white bg-nord-14 hover:bg-nord-14">Check Statistics</Button>
-          <Button className="text-white bg-nord-11 hover:bg-nord-11">Delete Employee</Button>
+          <Button className="text-white bg-nord-11 hover:bg-nord-11" onClick={() => {
+            setDeleteOpen(true);
+            setOpen(false);
+          }}>Delete Employee</Button>
         </DialogFooter>
       </DialogContent>
+      <EmployeeDeleteDialog open={deleteOpen} setOpen={setDeleteOpen} user={user} refetch={refetch}/>
     </Dialog>
   )
 }

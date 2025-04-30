@@ -49,3 +49,17 @@ export const createUser = async ({token, user}) => {
 
   return response.data;
 };
+
+// Requires admin
+export const deleteUser = async ({token, id}) => {
+  if (!token) {
+    throw new Error("No auth token provided");
+  }
+
+  const response = await api.delete(`/user/${id}`, {
+    headers: {
+       Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}

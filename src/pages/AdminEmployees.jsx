@@ -68,7 +68,7 @@ export default function AdminEmployees(){
         ))}
 
         {clickedUser && (
-          <EmployeeDetailsDialog open={userDetailsOpen} setOpen={setUserDetailsOpen} user={clickedUser}/>
+          <EmployeeDetailsDialog open={userDetailsOpen} setOpen={setUserDetailsOpen} user={clickedUser} refetch={refetch}/>
         )}
 
         {userAddOpen && (
