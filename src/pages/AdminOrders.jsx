@@ -48,7 +48,7 @@ export default function AdminOrders() {
   if (error)
     return (
       <div className="container mx-auto h-svh">
-        <div className="w-full h-full flex flex-col gap-3 items-center justify-center">
+        <div className="w-full h-full flex flex-col gap-4 items-center justify-center">
           <h3 className="text-nord-11 text-lg">Could not load the Orders!</h3>
           <Button
             className="bg-nord-11 hover:bg-nord-1 text-white rounded-lg active:scale-95 transition"
@@ -63,7 +63,7 @@ export default function AdminOrders() {
     );
   
   return (
-    <div className="container mx-auto my-5 grid grid-cols-2 gap-1">
+    <div className="container mx-auto my-5 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">
       {enrichedOrders.map((order) => (
         <OrderCard order={order} key={order.id}/>
       ))}
