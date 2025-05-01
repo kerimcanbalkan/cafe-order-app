@@ -1,4 +1,3 @@
-import { Plus } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMenu } from "@/api/menu";
 import Loading from "@/components/Loading";
