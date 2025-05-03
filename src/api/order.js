@@ -18,7 +18,7 @@ export const postOrder = async ({cart, tableID}) => {
  * @returns {Promise<Object|null>} The active order data or null if not found.
  */
 export const getActiveOrder = async (tableID) => {
-  const response = await api.get(`order?table=${tableID}&closed=false`, {
+  const response = await api.get(`order/active/${tableID}`, {
     headers: {
       'Cache-Control': 'no-cache',
     },
