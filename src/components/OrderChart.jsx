@@ -7,13 +7,11 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 
 export default function OrderChart({ data, dataKey, label, color }) {
+  
   return (
     <Card>
       <CardContent>
