@@ -8,7 +8,7 @@ import {
   Card,
   CardContent,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 
 export default function OrderChart({ data, dataKey, label, color }) {
   
