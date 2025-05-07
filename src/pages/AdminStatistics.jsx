@@ -6,7 +6,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 const mockChartToday = [
   { time: "8", totalOrders: 5, totalRevenue: 250},
@@ -97,7 +97,7 @@ export default function AdminStatistics(){
   }, [selectedRange]);
   
   return (
-    <div className="container mx-auto">
+    <div className="max-w-300 mx-auto">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-md font-semibold text-nord-0">View Order Statistics</h2>
         <Select defaultValue="today" onValueChange={setSelectedRange}>
@@ -113,11 +113,12 @@ export default function AdminStatistics(){
           </SelectContent>
         </Select>
       </div>
-
-      <div className=" my-5 grid grid-cols-1 lg:grid-cols-3 gap-2">
+      <div>
         <h1 className="text-nord-0 font-bold"> <span className="text-nord-10">Average Order Value</span>: {average}$</h1>
         <h1 className="text-nord-0 font-bold"> <span className="text-nord-10">Total Order Amount</span>: {data.reduce((sum, el) =>sum + el.totalOrders,0)}</h1>
         <h1 className="text-nord-0 font-bold mb-4"> <span className="text-nord-10">Total Revenue</span>: {data.reduce((sum, el)=>sum+el.totalRevenue,0)}$</h1>
+      </div>
+      <div className="my-5 grid grid-cols-1 lg:grid-cols-3 gap-2">
         <OrderChart data={data} dataKey="totalOrders" label="Amount of orders" color="#bf616a"/>
         <OrderChart data={data} dataKey="totalRevenue" label="Total Revenue" color="#88c0d0"/>
       </div>
