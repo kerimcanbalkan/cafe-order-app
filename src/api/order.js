@@ -13,8 +13,28 @@ export const postOrder = async ({cart, tableID}) => {
 }
 
 /**
- * Retrieves the active order for a specific table.
+ * Retrieves the all orders placed for every date
  * @param {number|string} tableNumber - The table number to fetch the active order for.
+ * @returns {Promise<Object|null>} The active order data or null if not found.
+ */
+export const getOrders = async ({token}) => {
+  if (!token) {
+    throw new Error("No auth token provided");
+  }
+  
+  const response = await api.get("order", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  
+  return response.data;
+}
+
+/**
+ * Retrieves the active order for a specific table.
+ * @param {string} tableNumber - The table id to fetch the active order for.
  * @returns {Promise<Object|null>} The active order data or null if not found.
  */
 export const getActiveOrder = async (tableID) => {
@@ -37,30 +57,32 @@ export const getOrdersWaiter = async ({token}) => {
     throw new Error("No auth token provided");
   }
   
-  const response = await api.get(`order?is_served=false`, {
+  const response = await api.get(`order?served=false`, {
     headers: {
       'Cache-Control': 'no-cache',
+      Authorization: `Bearer ${token}`,
     },
   });
   return response.data;
 }
 
 /**
- * Retrieves the all orders placed for every date
- * @param {number|string} tableNumber - The table number to fetch the active order for.
+ * Sends a patch request to mark order served for a given order id
+ * @param {string} id - The order ID
  * @returns {Promise<Object|null>} The active order data or null if not found.
  */
-export const getOrders = async ({token}) => {
+export const serveOrder = async ({token, id}) => {
+  console.log("this is the token provided" + token);
   if (!token) {
     throw new Error("No auth token provided");
   }
   
-  const response = await api.get("order", {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await api.patch(`order/serve/${id}`, null, {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
+
   
   return response.data;
 }

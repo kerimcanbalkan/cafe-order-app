@@ -32,7 +32,7 @@
  *
  * @param {{ order: Order }} props - The component props.
  */
-export default function OrderCard({ order }) {
+export default function OrderCard({ order, setOpenDetails, setSelectedOrder }) {
   const [date, hour] = new Date(order.createdAt)
   .toLocaleString("en-GB", {
     day: "2-digit",
@@ -43,7 +43,12 @@ export default function OrderCard({ order }) {
   })
   .split(", ");
   return (
-    <div className={`flex flex-col text-sm shadow-sm ${order.closedAt && order.servedAt ? "shadow-nord-10" : "shadow-nord-12" } p-2 w-full overflow-hidden rounded-md text-nord-0`}>
+    <div className={`flex flex-col cursor-pointer text-sm shadow-sm ${order.closedAt && order.servedAt ? "shadow-nord-10" : "shadow-nord-12" } p-2 w-full overflow-hidden rounded-md text-nord-0`} onClick={() => {
+      if (setOpenDetails && setSelectedOrder) {
+        setOpenDetails(true);
+        setSelectedOrder(order);        
+      }
+    }}>
       <h1 className="text-base font-semibold mb-2 text-nord-10">{order.tableName}</h1>
 
       {/* Scrollable list of items */}
