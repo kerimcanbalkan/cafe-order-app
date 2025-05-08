@@ -27,6 +27,25 @@ export const getActiveOrder = async (tableID) => {
 }
 
 /**
+ * Retrieves all orders that has not been served yet
+ * @param {string} authToken - authentication token
+ * @returns {Promise<Object|null>} The active order data or null if not found.
+ * requires authentication
+ */
+export const getOrdersWaiter = async ({token}) => {
+  if (!token) {
+    throw new Error("No auth token provided");
+  }
+  
+  const response = await api.get(`order?is_served=false`, {
+    headers: {
+      'Cache-Control': 'no-cache',
+    },
+  });
+  return response.data;
+}
+
+/**
  * Retrieves the all orders placed for every date
  * @param {number|string} tableNumber - The table number to fetch the active order for.
  * @returns {Promise<Object|null>} The active order data or null if not found.
