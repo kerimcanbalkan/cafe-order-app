@@ -3,6 +3,44 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import OrderServeDialog from "@/components/OrderServeDialog";
 
+/**
+ * @typedef {Object} MenuItem
+ * @property {string} id - Unique identifier of the menu item.
+ * @property {string} name - Name of the menu item.
+ * @property {string} description - Description of the menu item.
+ * @property {number} price - Price of the menu item.
+ * @property {string} category - Category to which the menu item belongs.
+ * @property {string} image - Image ID or URL for the menu item.
+ */
+
+/**
+ * @typedef {Object} OrderItem
+ * @property {MenuItem} menuItem - The menu item ordered.
+ * @property {number} quantity - The quantity of the menu item ordered.
+ */
+
+/**
+ * @typedef {Object} Order
+ * @property {string} id - Unique identifier for the order.
+ * @property {OrderItem[]} items - List of items in the order.
+ * @property {number} totalPrice - Total price of the order.
+ * @property {string} tableId - Identifier of the table where the order was placed.
+ * @property {string} createdAt - ISO string of when the order was created.
+ * @property {string} servedAt - ISO string of when the order was served.
+ * @property {string} closedAt - ISO string of when the order was closed.
+ * @property {string} handledBy - ID of the user (e.g. waiter) who handled the order.
+ * @property {string} closedBy - ID of the user (e.g. cashier) who closed the order.
+ */
+
+/**
+ * Order Details Dialog displays order details for the waiters.
+ *
+ * @param {Object} props - The component props
+ * @param {order} props.order - The order object
+ * @param {boolean} props.open - The dialog open state
+ * @param {function(boolean):void} props.setOpen - Open state set function
+ * @param {function():void} props.refetch - Refetch function of the parent component
+ */
 export default function OrderDetailsDialog({order, open, setOpen, refetch}){
   const [alertOpen, setAlertOpen] = useState(false);
   
