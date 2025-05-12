@@ -9,15 +9,18 @@ const api = axios.create({
 
 export const authApi = () => {
   const token = localStorage.getItem("authToken");
+
+  if (!token) {
+    throw new Error("No auth token provided");
+  }
   
   return axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
+    baseURL: "/api/v1/",
     headers: {
       "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
   });
 };
-
 
 export default api;

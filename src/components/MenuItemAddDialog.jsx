@@ -53,7 +53,6 @@ const formSchema = z.object({
  */
 export default function MenuItemAddDialog({open, setOpen, refetch}) {
   const showAlert = useAlert();
-  const token = localStorage.getItem("authToken");
   
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -67,8 +66,8 @@ export default function MenuItemAddDialog({open, setOpen, refetch}) {
   });
 
   const mutation = useMutation({
-    mutationFn: ({token, menuItem}) => {
-      return addMenuItem({token, menuItem});
+    mutationFn: (menuItem) => {
+      return addMenuItem(menuItem);
     },
     onError: (error) => {
       console.error("Error adding item:", error);
@@ -88,7 +87,7 @@ export default function MenuItemAddDialog({open, setOpen, refetch}) {
     formData.append("category", data.category);
     formData.append("image", data.image);
 
-    mutation.mutate({token: token, menuItem: formData});
+    mutation.mutate(formData);
     console.log("Creating menu item ", formData);
 
     form.reset();

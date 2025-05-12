@@ -11,17 +11,15 @@ export default function Waiter() {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
   
-  const token = localStorage.getItem("authToken");
-  
   const results = useQueries({
     queries: [
       {
         queryKey: ["order"],
-        queryFn: () => getOrdersWaiter({ token }),
+        queryFn: () => getOrdersWaiter(),
       },
       {
         queryKey: ["tables"],
-        queryFn: () => getTables({ token }),
+        queryFn: () => getTables(),
       },
     ],
   });
@@ -37,13 +35,16 @@ export default function Waiter() {
     tablesQuery.refetch();
   };
 
-  const enrichedOrders = orders?.data.map(o => {
-    const table = tables?.data.find(t => t.id === o.tableId);
-    return {
-    ...o,
-      tableName: table?.name || "Unknown Table",
-    };
-  });
+  const enrichedOrders = Array.isArray(orders?.data)
+    ? orders.data.map(o => {
+      const table = tables?.data.find(t => t.id === o.tableId);
+      return {
+        ...o,
+        tableName: table?.name || "Unknown Table",
+      };
+    })
+    : [];
+
 
   const isLoading = orderQuery.isLoading || tablesQuery.isLoading;
   const error = orderQuery.error || tablesQuery.error;
@@ -70,6 +71,22 @@ export default function Waiter() {
         </div>
       </div>
     );
+
+  if (!isLoading && !error && (!orders?.data || orders?.data.length === 0)) {
+    return (
+      <div className="container mx-auto h-svh">
+        <div className="w-full h-full flex flex-col gap-4 items-center justify-center">
+          <h3 className="text-nord-11 text-lg">No recent orders at the moment.</h3>
+          <Button
+            className="bg-nord-14 hover:bg-nord-14 text-white rounded-lg active:scale-95 transition"
+            onClick={refetch}
+          >
+             Refresh
+          </Button>
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div className="container mx-auto my-5 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">

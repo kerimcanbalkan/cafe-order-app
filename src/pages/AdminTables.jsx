@@ -22,7 +22,6 @@ export default function AdminTables() {
   const [open, setOpen] = useState(false);
   const showAlert = useAlert();
   const orderBaseUrl = `${window.location.origin}/order`;
-  const token = localStorage.getItem("authToken");
   
   const {
     data: tables,
@@ -31,12 +30,12 @@ export default function AdminTables() {
     refetch,
   } = useQuery({
     queryKey: ["table"],
-    queryFn: () => getTables({ token }),
+    queryFn: getTables,
   });
 
   const deleteMutation = useMutation({
-    mutationFn: ({ token, tableID }) => {
-      return deleteTableById({ token, tableID });
+    mutationFn: (tableID) => {
+      return deleteTableById(tableID);
     },
     onError: (error) => {
       console.error("Error deleting table", error);
@@ -44,7 +43,7 @@ export default function AdminTables() {
     },
     onSuccess: () => {
       showAlert("success", "Success!", "Table deleted successfully");
-      refetch(); // optional: refresh the table list
+      refetch();
     }
   });
 
@@ -94,7 +93,7 @@ export default function AdminTables() {
             <TableCell>{new Date(table.createdAt).toLocaleDateString("en-GB")}</TableCell>
             <TableCell><a className="text-nord-10"href={`${orderBaseUrl}/${table.id}`}><ExternalLink/></a></TableCell>
             <TableCell>
-                {deleteMutation.isPending ? <Loading/> : <Trash size={20} className="text-nord-11 cursor-pointer" disabled={deleteMutation.isLoading} onClick={() => deleteMutation.mutate({ token, tableID: table.id })}/> }                
+                {deleteMutation.isPending ? <Loading/> : <Trash size={20} className="text-nord-11 cursor-pointer" disabled={deleteMutation.isLoading} onClick={() => deleteMutation.mutate(table.id)}/> }                
             </TableCell>
           </TableRow>
         ))}

@@ -1,18 +1,14 @@
 import api from "./axios";
+import { authApi } from "./axios";
 
 export const getTableByID = async (tableId) => {
   const response = await api.get(`/table/${tableId}`);
   return response.data;
 }
 
-export const getTables = async ({token}) => {
-  if (!token) {
-    throw new Error("No auth token provided");
-  }
-  
-  const response = await api.get("/table", {
+export const getTables = async () => {
+  const response = await authApi().get("/table", {
     headers: {
-      Authorization: `Bearer ${token}`,
       'Cache-Control': 'no-cache',
     }
   });
@@ -20,14 +16,9 @@ export const getTables = async ({token}) => {
   return response.data;
 }
 
-export const createTable = async ({token, table}) => {
-  if (!token) {
-    throw new Error("No auth token provided");
-  }
-
-  const response = await api.post("/table",table, {
+export const createTable = async (table) => {
+  const response = await authApi().post("/table",table, {
     headers: {
-      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     }
   });
@@ -35,16 +26,8 @@ export const createTable = async ({token, table}) => {
   return response.data;
 }
 
-export const deleteTableById = async ({token, tableID}) => {
-  if (!token) {
-    throw new Error("No auth token provided");
-  }
-
-  const response = await api.delete(`/table/${tableID}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    }
-  });
+export const deleteTableById = async (tableID) => {
+  const response = await authApi().delete(`/table/${tableID}`);
 
   return response.data;
 }

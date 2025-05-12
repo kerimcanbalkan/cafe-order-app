@@ -6,17 +6,15 @@ import { getTables } from "@/api/table";
 import { Button } from "@/components/ui/button";
 
 export default function AdminOrders() {
-  const token = localStorage.getItem("authToken");
-  
   const results = useQueries({
     queries: [
       {
         queryKey: ["order"],
-        queryFn: () => getOrders({ token }),
+        queryFn: () => getOrders(),
       },
       {
         queryKey: ["tables"],
-        queryFn: () => getTables({ token }),
+        queryFn: () => getTables(),
       },
     ],
   });
@@ -26,18 +24,35 @@ export default function AdminOrders() {
   const orders = orderQuery.data;
   const tables = tablesQuery.data;
 
-  const enrichedOrders = orders?.data.map(o => {
-    const table = tables?.data.find(t => t.id === o.tableId);
-    return {
-    ...o,
-      tableName: table?.name || "Unknown Table",
-    };
-  });
-
+  const enrichedOrders = Array.isArray(orders?.data)
+    ? orders.data.map(o => {
+      const table = tables?.data.find(t => t.id === o.tableId);
+      return {
+        ...o,
+        tableName: table?.name || "Unknown Table",
+      };
+    })
+    : [];
   
 
   const isLoading = orderQuery.isLoading || tablesQuery.isLoading;
   const error = orderQuery.error || tablesQuery.error;
+
+  if (!isLoading && !error && (!orders?.data || orders?.data.length === 0)) {
+    return (
+      <div className="container mx-auto h-svh">
+        <div className="w-full h-full flex flex-col gap-4 items-center justify-center">
+          <h3 className="text-nord-11 text-lg">No recent orders at the moment.</h3>
+          <Button
+            className="bg-nord-14 hover:bg-nord-14 text-white rounded-lg active:scale-95 transition"
+            onClick={refetch}
+          >
+             Refresh
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
     if (isLoading)
     return (

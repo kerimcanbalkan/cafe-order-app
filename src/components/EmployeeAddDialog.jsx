@@ -36,7 +36,6 @@ const formSchema = z.object({
 
 export default function EmployeeAddDialog({ open, setOpen, refetch }) {
   const showAlert = useAlert();
-  const token = localStorage.getItem("authToken");
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -52,7 +51,7 @@ export default function EmployeeAddDialog({ open, setOpen, refetch }) {
   });
 
   const mutation = useMutation({
-    mutationFn: ({ token, user }) => createUser({ token, user }),
+    mutationFn: (user) => createUser(user),
     onError: (error) => {
       console.error("Error adding employee:", error);
       showAlert("error", "Error!", "Could not add the employee");
@@ -66,8 +65,7 @@ export default function EmployeeAddDialog({ open, setOpen, refetch }) {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
-    mutation.mutate({ token, user: data });
+    mutation.mutate(data);
   };
 
   return (

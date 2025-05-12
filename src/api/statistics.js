@@ -1,4 +1,4 @@
-import api from "./axios";
+import api, { authApi } from "./axios";
 
 /**
  * Retrieves order statistics for a given time period
@@ -7,17 +7,13 @@ import api from "./axios";
  * @param {string} params.to - Date in YYYY-MM-DD format
  * @param {string} params.token - Auth token for the api authentication
  */
-export const getOrderStatistics = async ({from, to, token}) => {
-  if (!token) {
-    throw new Error("No auth token provided");
-  }
+export const getOrderStatistics = async ({from, to}) => {
   
-  const response = await api.get(`order/stats?from=${from}&to=${to}`,
+  const response = await authApi().get(`order/stats?from=${from}&to=${to}`,
     {
       headers: {
         'Cache-Control': 'no-cache',
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       }
     });
   return response.data;

@@ -1,4 +1,4 @@
-import api from "./axios";
+import api, { authApi } from "./axios";
 
 export const fetchMenu = async () => {
   const response = await api.get("/menu", {
@@ -9,27 +9,14 @@ export const fetchMenu = async () => {
   return response.data;
 };
 
-export const deleteMenuItem = async ({token, id}) => {
-  if (!token) {
-    throw new Error("No auth token provided");
-  }
-
-  const response = await api.delete(`/menu/${id}`, {
-    headers: {
-       Authorization: `Bearer ${token}`,
-    },
-  });
+export const deleteMenuItem = async (id) => {
+  const response = await authApi().delete(`/menu/${id}`);
   return response.data;
 }
 
-export const addMenuItem = async ({ token, menuItem }) => {
-  if (!token) {
-    throw new Error("No auth token provided");
-  }
-
-  const response = await api.post("/menu", menuItem, {
+export const addMenuItem = async (menuItem) => {
+  const response = await authApi().post("/menu", menuItem, {
     headers: {
-      Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",
     },
   });

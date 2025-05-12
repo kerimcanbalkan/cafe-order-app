@@ -12,7 +12,6 @@ export default function AdminEmployees(){
   const [userDetailsOpen, setUserDetailsOpen] = useState(false);
   const [userAddOpen, setUserAddOpen] = useState(false);
   const [clickedUser, setClickedUser] = useState(null);
-  const token = localStorage.getItem("authToken");
 
   const handleAdd = () => {
     setUserAddOpen(true);
@@ -25,7 +24,7 @@ export default function AdminEmployees(){
     refetch,
   } = useQuery({
     queryKey: ["user"],
-    queryFn: () => getAllUsers({ token }),
+    queryFn: () => getAllUsers(),
   });
 
   const allUsers = users?.data || [];

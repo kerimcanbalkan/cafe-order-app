@@ -22,11 +22,10 @@ import { serveOrder } from "@/api/order";
  */
 export default function OrderServeDialog({open, setOpen, id, table, refetch}){
   const showAlert = useAlert();
-  const token = localStorage.getItem("authToken");
   
   const mutation = useMutation({
-    mutationFn: ({token, id}) => {
-      return serveOrder({token, id});
+    mutationFn: (id) => {
+      return serveOrder(id);
     },
     onError: (error) => {
       console.error("Error deleting user:", error.message);
@@ -39,8 +38,7 @@ export default function OrderServeDialog({open, setOpen, id, table, refetch}){
   });
 
   const handleClick = () => {
-    mutation.mutate({token: token, id: id});
-    console.log("Serving the order" + id + "of" + table);
+    mutation.mutate(id);
   }
   
   return (

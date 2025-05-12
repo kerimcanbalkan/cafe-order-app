@@ -31,11 +31,9 @@ import { useAlert } from "@/components/AlertProvider";
  */
 export default function EmployeeDeleteDialog({open, setOpen, user, refetch}) {
   const showAlert = useAlert();
-  const token = localStorage.getItem("authToken");
-  
   const mutation = useMutation({
-    mutationFn: ({token, id}) => {
-      return deleteUser({token, id});
+    mutationFn: (id) => {
+      return deleteUser(id);
     },
     onError: (error) => {
       console.error("Error deleting user:", error.message);
@@ -48,7 +46,7 @@ export default function EmployeeDeleteDialog({open, setOpen, user, refetch}) {
   });
 
   const handleDeleteClick = () => {
-    mutation.mutate({token: token, id: user.id});
+    mutation.mutate(user.id);
     console.log("Deleting "+ user.name + " "+ user.id);
   }
   

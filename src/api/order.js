@@ -1,4 +1,5 @@
 import api from "./axios";
+import { authApi } from "./axios";
 
 /**
  * Sends an order to the API.
@@ -17,15 +18,10 @@ export const postOrder = async ({cart, tableID}) => {
  * @param {number|string} tableNumber - The table number to fetch the active order for.
  * @returns {Promise<Object|null>} The active order data or null if not found.
  */
-export const getOrders = async ({token}) => {
-  if (!token) {
-    throw new Error("No auth token provided");
-  }
-  
-  const response = await api.get("order", {
+export const getOrders = async () => {
+  const response = await authApi().get("order",{
     headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      'Cache-Control': 'no-cache',
     },
   });
   
@@ -52,17 +48,13 @@ export const getActiveOrder = async (tableID) => {
  * @returns {Promise<Object|null>} The active order data or null if not found.
  * requires authentication
  */
-export const getOrdersWaiter = async ({token}) => {
-  if (!token) {
-    throw new Error("No auth token provided");
-  }
-  
-  const response = await api.get(`order?served=false`, {
+export const getOrdersWaiter = async () => {
+  const response = await authApi().get(`order?served=false`, {
     headers: {
       'Cache-Control': 'no-cache',
-      Authorization: `Bearer ${token}`,
     },
   });
+
   return response.data;
 }
 
@@ -71,18 +63,8 @@ export const getOrdersWaiter = async ({token}) => {
  * @param {string} id - The order ID
  * @returns {Promise<Object|null>} The active order data or null if not found.
  */
-export const serveOrder = async ({token, id}) => {
-  console.log("this is the token provided" + token);
-  if (!token) {
-    throw new Error("No auth token provided");
-  }
-  
-  const response = await api.patch(`order/serve/${id}`, null, {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});
-
+export const serveOrder = async (id) => {
+  const response = await authApi().patch(`order/serve/${id}`, null);
   
   return response.data;
 }

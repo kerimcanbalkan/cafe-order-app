@@ -30,7 +30,6 @@ const formSchema = z.object({
 
 export default function TableAddDialog({ open, setOpen, refetch }) {
   const showAlert = useAlert();
-  const token = localStorage.getItem("authToken");
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -38,7 +37,7 @@ export default function TableAddDialog({ open, setOpen, refetch }) {
   });
 
   const mutation = useMutation({
-    mutationFn: ({ token, table }) => createTable({ token, table }),
+    mutationFn: (table) => createTable(table),
     onError: (error) => {
       console.error("Error creating table:", error);
       showAlert("error", "Error!", "Could not create the table");
@@ -51,7 +50,7 @@ export default function TableAddDialog({ open, setOpen, refetch }) {
   });
 
   const onSubmit = (data) => {
-    mutation.mutate({ token, table: data });
+    mutation.mutate(data);
     form.reset();
   };
 

@@ -28,11 +28,10 @@ import { useAlert } from "@/components/AlertProvider";
  */
 export default function MenuItemDeleteDialog({open, setOpen, menuItem, refetch}) {
   const showAlert = useAlert();
-  const token = localStorage.getItem("authToken");
   
   const mutation = useMutation({
-    mutationFn: ({token, id}) => {
-      return deleteMenuItem({token, id});
+    mutationFn: (id) => {
+      return deleteMenuItem(id);
     },
     onError: (error) => {
       console.error("Error deleting item:", error);
@@ -45,7 +44,7 @@ export default function MenuItemDeleteDialog({open, setOpen, menuItem, refetch})
   });
 
   const handleDeleteClick = () => {
-    mutation.mutate({token: token, id: menuItem.id});
+    mutation.mutate(menuItem.id);
     console.log("Deleting "+ menuItem.name + " "+ menuItem.id);
   }
   
