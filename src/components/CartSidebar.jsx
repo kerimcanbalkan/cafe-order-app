@@ -16,35 +16,22 @@ import PlaceOrderButton from "./PlaceOrderButton";
 export function CartSidebar() {
   const { toggleSidebar } = useSidebar();
   const { cart, getCartTotal, clearCart } = useCart();
-  const { order, getOrderTotal } = useOrder();
-  const transformedOrder = order.length > 0
-        ? order.reduce((acc, order) => {
-            order.items.forEach((item) => {
-              const existingItem = acc.find((i) => i.menuItem.id === item.menuItem.id);
-              if (existingItem) {
-                existingItem.quantity += item.quantity;
-              } else {
-                acc.push({ ...item });
-              }
-            });
-            return acc;
-          }, [])
-    : [];
-  
+  const { order } = useOrder();
+
   return (
     <Sidebar side="right" variant="inset">
       <SidebarHeader className="flex items-end">
         <X className="text-nord-11" onClick={toggleSidebar}/>
       </SidebarHeader>
       <SidebarContent className="p-3">
-        {transformedOrder.length === 0 ? (
+        {order?.items?.length === 0 ? (
           ""
         ) : (
           <div>
             <h2 className="border-b border-nord-10 mb-2 text-xl font-bold text-nord-10">
               Active Order
             </h2>
-            {transformedOrder.map((item) => (
+            {order?.items?.map((item) => (
               <div key={item.menuItem.id} className="flex justify-between mb-2">
                 <p className="text-nord-1">{`${item.menuItem.name} x${item.quantity}`}</p>
                 <p className="font-bold text-nord-1">{`${item.menuItem.price * item.quantity}$`}</p>
@@ -53,7 +40,7 @@ export function CartSidebar() {
             <div className="border-t border-nord-4 pt-2 mt-2">
               <p className="text-lg flex justify-between">
                 <span>Total Order Price</span>
-                <span className="font-bold">{getOrderTotal()}$</span>
+                <span className="font-bold">{order.totalPrice}$</span>
               </p>
             </div>
           </div>
