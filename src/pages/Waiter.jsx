@@ -93,7 +93,7 @@ export default function Waiter() {
       {enrichedOrders.map((order) => (
         <OrderCard order={order} key={order.id} setOpenDetails={setDetailsOpen} setSelectedOrder={setSelectedOrder}/>
       ))}
-      {selectedOrder && <OrderDetailsDialog order={selectedOrder} open={detailsOpen} setOpen={setDetailsOpen} refetch={refetch}/>}
+      {selectedOrder && <OrderDetailsDialog order={selectedOrder} open={detailsOpen} setOpen={setDetailsOpen} refetch={refetch} variation="waiter"/>}
     </div>
   );
 }

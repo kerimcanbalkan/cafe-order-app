@@ -7,6 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getActiveOrder } from "@/api/order";
 import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
+import OrderDetailsDialog from "@/components/OrderDetailsDialog";
+import { useState } from "react";
 
 
 /**
@@ -16,8 +18,7 @@ import { Button } from "@/components/ui/button";
  * @param {string} props.table.id - The table ID.
   * @param {string} props.table.name - The table name.
  */
-export default function TableCard({ table }){
-
+export default function TableCard({ table, setDetailsOpen, setOrder }){
   const {
     data: order,
     isLoading,
@@ -31,10 +32,12 @@ export default function TableCard({ table }){
   const orders = order?.data || [];
 
   const handleClick = () => {
-    console.log(table.name,
-      " ", orders);
+    if (orders?.items?.length !== 0){
+      orders.tableName = table.name
+      setOrder(orders)
+      setDetailsOpen(true);
+    }
   }
-
 
   if (isLoading)
     return (

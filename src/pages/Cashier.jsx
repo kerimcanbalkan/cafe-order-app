@@ -3,9 +3,15 @@ import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { getTables } from "@/api/table";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import OrderDetailsDialog from "../components/OrderDetailsDialog";
 
 export default function Cashier() {
-    const {
+
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [order, setOrder]  = useState(null);
+  
+  const {
     data: table,
     isLoading,
     error,
@@ -40,14 +46,26 @@ export default function Cashier() {
     );
 
   const tables = table?.data || [];
+
+  // Sort alphabetically
+  tables.sort((a, b) => a.name.localeCompare(b.name));
   
   return (
     <div className="mx-auto mt-10">
       <div className="container mx-auto my-5 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-2">
         {tables.map((table, index) => (
-          <TableCard key={index} table={table}/>
+          <TableCard key={index} table={table} setOrder={setOrder} setDetailsOpen={setDetailsOpen}/>
         ))}
       </div>
+      {order && (
+        <OrderDetailsDialog
+          order={order}
+          open={detailsOpen}
+          setOpen={setDetailsOpen}
+          refetch={refetch}
+          variation="cashier"
+        />
+      )}
     </div>
   );
 }

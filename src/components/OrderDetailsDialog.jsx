@@ -2,6 +2,7 @@ import { Dialog, DialogContent, DialogFooter, DialogTitle} from "@/components/ui
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import OrderServeDialog from "@/components/OrderServeDialog";
+import OrderCloseDialog from "./OrderCloseDialog";
 
 /**
  * @typedef {Object} MenuItem
@@ -40,8 +41,9 @@ import OrderServeDialog from "@/components/OrderServeDialog";
  * @param {boolean} props.open - The dialog open state
  * @param {function(boolean):void} props.setOpen - Open state set function
  * @param {function():void} props.refetch - Refetch function of the parent component
+ * @param {string} props.variation - variation of the dialog should be one of waiter or cashier
  */
-export default function OrderDetailsDialog({order, open, setOpen, refetch}){
+export default function OrderDetailsDialog({order, open, setOpen, refetch, variation}){
   const [alertOpen, setAlertOpen] = useState(false);
   
   return (
@@ -51,7 +53,7 @@ export default function OrderDetailsDialog({order, open, setOpen, refetch}){
 
         {/* Scrollable list of items */}
         <div className="flex-1 overflow-y-auto pr-1 mb-2">
-          {order.items.map((item) => (
+          {order?.items?.map((item) => (
             <div key={item.menuItem.id} className="flex justify-between mb-2">
               <p className="text-nord-1">{item.menuItem.name} <span className="text-nord-11 text-lg">x{item.quantity}</span></p>
               <p className="font-bold text-nord-1">{`${item.menuItem.price * item.quantity}$`}</p>
@@ -74,10 +76,29 @@ export default function OrderDetailsDialog({order, open, setOpen, refetch}){
           <Button className="text-white bg-nord-14 hover:bg-nord-14" onClick={() => {
             setAlertOpen(true);
             setOpen(false);
-          }}>Serve</Button>
+          }}>{variation === "cashier" ? "Close" : "Serve"}</Button>
         </DialogFooter>
       </DialogContent>
-      <OrderServeDialog open={alertOpen} setOpen={setAlertOpen} refetch={refetch} id={order.id} table={order.tableName}/>
+      
+      {
+        variation === "waiter" ? (
+          <OrderServeDialog
+            open={alertOpen}
+            setOpen={setAlertOpen}
+            refetch={refetch}
+            id={order.id}
+            table={order.tableName}
+          />
+        ) : (
+          <OrderCloseDialog
+            open={alertOpen}
+            setOpen={setAlertOpen}
+            refetch={refetch}
+            tableName={order.tableName}
+            tableId={order.tableId}
+          />
+        )
+      }
     </Dialog>
   );
 }

@@ -68,3 +68,14 @@ export const serveOrder = async (id) => {
   
   return response.data;
 }
+
+/**
+ * Sends a patch request to mark order closed for a given table id
+ * @param {string} id - Table ID
+ * @returns {Promise<Object|null>} The active order data or null if not found.
+ */
+export const closeOrder = async (id) => {
+  const response = await authApi().patch(`order/close/${id}`, null);
+  
+  return response.data;
+}
