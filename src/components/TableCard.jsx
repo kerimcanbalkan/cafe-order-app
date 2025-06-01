@@ -64,7 +64,7 @@ export default function TableCard({ table }){
     );
   
   return (
-    <Card className={`cursor-pointer ${orders.length === 0 ? "" : "shadow-nord-11"}`} onClick={handleClick}>
+    <Card className={`cursor-pointer ${orders?.items?.length === 0 ? "" : "shadow-nord-11"}`} onClick={handleClick}>
       <CardContent className="flex items-center justify-center p-4 min-h-30">
         <CardTitle className="text-nord-0">
           {table.name}
