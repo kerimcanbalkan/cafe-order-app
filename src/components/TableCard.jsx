@@ -7,8 +7,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getActiveOrder } from "@/api/order";
 import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
-import OrderDetailsDialog from "@/components/OrderDetailsDialog";
-import { useState } from "react";
 
 
 /**
