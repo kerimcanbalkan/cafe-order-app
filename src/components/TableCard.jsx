@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
  * @param {string} props.table.id - The table ID.
   * @param {string} props.table.name - The table name.
  */
-export default function TableCard({ table, setDetailsOpen, setOrder }){
+export default function TableCard({ table, setDetailsOpen, setOrder, setOrderRefetch }){
   const {
     data: order,
     isLoading,
@@ -34,6 +34,7 @@ export default function TableCard({ table, setDetailsOpen, setOrder }){
       orders.tableName = table.name
       setOrder(orders)
       setDetailsOpen(true);
+      setOrderRefetch(() => refetch);
     }
   }
 

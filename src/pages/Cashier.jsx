@@ -10,6 +10,7 @@ export default function Cashier() {
 
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [order, setOrder]  = useState(null);
+  const [activeOrderRefetch, setActiveOrderRefetch] = useState(()=>{});
   
   const {
     data: table,
@@ -54,7 +55,7 @@ export default function Cashier() {
     <div className="mx-auto mt-10">
       <div className="container mx-auto my-5 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-2">
         {tables.map((table, index) => (
-          <TableCard key={index} table={table} setOrder={setOrder} setDetailsOpen={setDetailsOpen}/>
+          <TableCard key={index} table={table} setOrder={setOrder} setDetailsOpen={setDetailsOpen} setOrderRefetch={setActiveOrderRefetch}/>
         ))}
       </div>
       {order && (
@@ -62,7 +63,7 @@ export default function Cashier() {
           order={order}
           open={detailsOpen}
           setOpen={setDetailsOpen}
-          refetch={refetch}
+          refetch={activeOrderRefetch}
           variation="cashier"
         />
       )}
