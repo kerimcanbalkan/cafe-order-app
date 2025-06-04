@@ -37,7 +37,8 @@ export default function EmployeeDeleteDialog({open, setOpen, user, refetch}) {
     },
     onError: (error) => {
       console.error("Error deleting user:", error.message);
-      showAlert("error", "Error!", "Could delete the user");
+      const message = error?.response?.data?.error || "Something went wrong while deleting employee. Please try again.";      
+      showAlert("error", "Error!", message);
     },
     onSuccess: () => {
       refetch();

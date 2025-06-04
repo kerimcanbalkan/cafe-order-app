@@ -20,7 +20,8 @@ export default function PlaceOrderButton(){
     },
     onError: (error) => {
       console.error("Error placing order:", error);
-      showAlert("error", "Error!", "Could not place the order!");
+      const message = error?.response?.data?.error || "Something went wrong while placing order. Please try again.";      
+      showAlert("error", "Error!", message);
     },
     onSuccess: () => {
       showAlert("success", "Success!", "Order Placed Successfully");

@@ -54,7 +54,8 @@ export default function EmployeeAddDialog({ open, setOpen, refetch }) {
     mutationFn: (user) => createUser(user),
     onError: (error) => {
       console.error("Error adding employee:", error);
-      showAlert("error", "Error!", "Could not add the employee");
+      const message = error?.response?.data?.error || "Something went wrong while creating employee. Please try again.";      
+      showAlert("error", "Error!", message);
     },
     onSuccess: () => {
       refetch();

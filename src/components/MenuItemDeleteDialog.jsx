@@ -35,7 +35,8 @@ export default function MenuItemDeleteDialog({open, setOpen, menuItem, refetch})
     },
     onError: (error) => {
       console.error("Error deleting item:", error);
-      showAlert("error", "Error!", "Could delete the item");
+      const message = error?.response?.data?.error || "Something went wrong while deleting menu item. Please try again.";      
+      showAlert("error", "Error!", message);
     },
     onSuccess: () => {
       refetch();

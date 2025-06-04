@@ -40,7 +40,8 @@ export default function TableAddDialog({ open, setOpen, refetch }) {
     mutationFn: (table) => createTable(table),
     onError: (error) => {
       console.error("Error creating table:", error);
-      showAlert("error", "Error!", "Could not create the table");
+      const message = error?.response?.data?.error || "Something went wrong while creating table. Please try again.";      
+      showAlert("error", "Error!", message);
     },
     onSuccess: () => {
       refetch?.();

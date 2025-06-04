@@ -29,7 +29,8 @@ export default function OrderServeDialog({open, setOpen, id, table, refetch}){
     },
     onError: (error) => {
       console.error("Error deleting user:", error.message);
-      showAlert("error", "Error!", "Could not serve the order");
+      const message = error?.response?.data?.error || "Something went wrong while serving the order. Please try again.";      
+      showAlert("error", "Error!", message);
     },
     onSuccess: () => {
       refetch();

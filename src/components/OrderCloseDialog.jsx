@@ -30,7 +30,7 @@ export default function OrderCloseDialog({open, setOpen, tableName, tableId, ref
     onError: (error) => {
       console.error("Error closing order", error);
       
-      const message = error?.response?.data?.error || "Could not close the order";
+      const message = error?.response?.data?.error || "Something went wrong while closing the order. Please try again.";      
       showAlert("error", "Error!", message);
     },
     onSuccess: () => {
