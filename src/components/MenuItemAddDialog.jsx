@@ -71,7 +71,8 @@ export default function MenuItemAddDialog({open, setOpen, refetch}) {
     },
     onError: (error) => {
       console.error("Error adding item:", error);
-      showAlert("error", "Error!", "Could not the item");
+      const message = error?.response?.data?.error || "Something went wrong while creating menu item. Please try again.";      
+      showAlert("error", "Error!", message);
     },
     onSuccess: () => {
       refetch();
