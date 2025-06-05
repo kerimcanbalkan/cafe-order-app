@@ -7,7 +7,7 @@ A modern, multi-role restaurant management system built with **React**, **Vite**
 ## 🚀 Tech Stack
 
 - **Frontend**: React, Vite, TailwindCSS, ShadCN UI
-- **Backend**: Golang (API must be running separately)
+- **Backend**: [**cafeOrderAPI**](https://github.com/kerimcanbalkan/cafe-orderAPI)
 - **Routing**: React Router
 - **Styling**: TailwindCSS + ShadCN components
 - **State Management**: React Hooks
