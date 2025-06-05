@@ -55,7 +55,7 @@ A modern, multi-role restaurant management system built with **React**, **Vite**
 
 ## 🖼️ Screenshots
 
-| Admin - Login | Admin - Employees |
+| Login | Admin - Employees |
 |---------------|-------------------|
 | ![](public/screenshots/login.png) | ![](public/screenshots/admin-employees.png) |
 
@@ -93,11 +93,3 @@ A modern, multi-role restaurant management system built with **React**, **Vite**
 
 - ✅ Core functionality working across all roles
 - 🚧 Employee statistics and detailed admin order page are in progress
-
----
-
-## 📫 Feedback or Contributions
-
-Feel free to open an issue or PR! Any feedback is appreciated.
-
----
