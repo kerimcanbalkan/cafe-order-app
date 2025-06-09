@@ -7,121 +7,148 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-const mockChartToday = [
-  { time: "8", totalOrders: 5, totalRevenue: 250},
-  { time: "10", totalOrders: 8, totalRevenue: 400},
-  { time: "12", totalOrders: 10, totalRevenue: 520},
-  { time: "14", totalOrders: 7, totalRevenue: 350},
-  { time: "16", totalOrders: 6, totalRevenue: 330},
-  { time: "18", totalOrders: 9, totalRevenue: 495},
-  { time: "20", totalOrders: 4, totalRevenue: 220},
-];
-
-const mockAverageToday = 259;
-const mockAverageLast7Days = 221;
-const mockAverageThisMonth = 280;
-const mockAverageLastMonth = 100;
-const mockAverageThisYear = 230;
-
-const mockChartLast7Days = [
-  { time: "Monday", totalOrders: 75, totalRevenue: 3750},
-  { time: "Tuesday", totalOrders: 80, totalRevenue: 4000},
-  { time: "Wednesday", totalOrders: 90, totalRevenue: 4950},
-  { time: "Thursday", totalOrders: 85, totalRevenue: 4675},
-  { time: "Friday", totalOrders: 100, totalRevenue: 5500},
-  { time: "Saturday", totalOrders: 120, totalRevenue: 6600},
-  { time: "Sunday", totalOrders: 95, totalRevenue: 5225},
-];
-
-const mockChartThisMonth = [
-  { time: "1", totalOrders: 120, totalRevenue: 6000},
-  { time: "2", totalOrders: 140, totalRevenue: 7700},
-  { time: "3", totalOrders: 135, totalRevenue: 7425},
-  { time: "4", totalOrders: 150, totalRevenue: 8250},
-];
-
-const mockChartLastMonth = [
-  { time: "1", totalOrders: 110, totalRevenue: 4000},
-  { time: "2", totalOrders: 125, totalRevenue: 6875},
-  { time: "3", totalOrders: 130, totalRevenue: 7150},
-  { time: "4", totalOrders: 120, totalRevenue: 6600},
-];
-
-const mockChartThisYear = [
-  { time: "January", totalOrders: 120, totalRevenue: 6000},
-  { time: "February", totalOrders: 98, totalRevenue: 4900},
-  { time: "March", totalOrders: 130, totalRevenue: 7150},
-  { time: "April", totalOrders: 110, totalRevenue: 5500},
-  { time: "May", totalOrders: 145, totalRevenue: 7980},
-  { time: "June", totalOrders: 160, totalRevenue: 8800},
-  { time: "July", totalOrders: 170, totalRevenue: 9350},
-  { time: "August", totalOrders: 150, totalRevenue: 8250},
-  { time: "September", totalOrders: 140, totalRevenue: 7000},
-  { time: "October", totalOrders: 155, totalRevenue: 7750},
-  { time: "November", totalOrders: 125, totalRevenue: 6875},
-  { time: "December", totalOrders: 180, totalRevenue: 9900},
-];
+import { useQuery } from "@tanstack/react-query";
+import { getOrderStatistics } from "@/api/statistics";
+import Loading from "@/components/Loading";
 
 
 export default function AdminStatistics(){
-  const [selectedRange, setSelectedRange] = useState("today");
-  const [data, setData] = useState(mockChartToday);
-  const [average, setAverage] = useState(mockAverageToday);
+  const { start: initialStart, end: initialEnd } = getWeekRange();
+  const [selectedRange, setSelectedRange] = useState("last7Days");
+  const [start, setStart] = useState(initialStart);
+  const [end, setEnd] = useState(initialEnd);
+  const [group, setGroup] = useState("day");
 
   useEffect(() => {
+    let range;
+
     switch (selectedRange) {
-      case "today":
-        setData(mockChartToday);
-        setAverage(mockAverageToday);
-        break;
-      case "last7days":
-        setData(mockChartLast7Days);
-        setAverage(mockAverageLast7Days);
-        break;
-      case "thisMonth":
-        setData(mockChartThisMonth);
-        setAverage(mockAverageThisMonth);
-        break;
-      case "lastMonth":
-        setData(mockChartLastMonth);
-        setAverage(mockAverageLastMonth);
-        break;
-      case "thisYear":
-        setData(mockChartThisYear);
-        setAverage(mockAverageThisYear);
-        break;
-      default:
-        setChartData([]);
+    case "last7Days":
+      range = getWeekRange();
+      setGroup("day");
+      break;
+    case "thisMonth":
+      range = getMonthRange();
+      setGroup("week");
+      break;
+    case "thisYear":
+      range = getYearRange();
+      setGroup("month");
+      break;
+    default:
+      range = null;
+      setStart(null);
+      setEnd(null);
+      break;
+    }
+
+    if (range) {
+      setStart(range.start);
+      setEnd(range.end);
+      refetch();
     }
   }, [selectedRange]);
-  
+
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ["data", start, end, group],
+    queryFn: () => getOrderStatistics({ from: start, to: end, groupBy: group }),
+    enabled: Boolean(start && end),
+  });
+
+
+  console.log("THIS IS STATS DATA RETURNED", data);
+
+    if (isLoading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  if (error)
+    return (
+      <div className="container mx-auto h-svh">
+        <div className="w-full h-full flex flex-col gap-3 items-center justify-center">
+          <h3 className="text-nord-11 text-lg">Could not load the statistics!</h3>
+          <Button
+            className="bg-nord-11 hover:bg-nord-1 text-white rounded-lg active:scale-95 transition"
+            onClick={() => {
+              refetch();
+            }}
+          >
+            Retry
+          </Button>
+        </div>
+      </div>
+    );
+
   return (
     <div className="max-w-300 mx-auto">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-md font-semibold text-nord-0">View Order Statistics</h2>
-        <Select defaultValue="today" onValueChange={setSelectedRange}>
+        <Select defaultValue={selectedRange} onValueChange={setSelectedRange}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Today" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="today">Today</SelectItem>
-            <SelectItem value="last7days">Last 7 Days</SelectItem>
+            <SelectItem value="last7Days">Last 7 Days</SelectItem>
             <SelectItem value="thisMonth">This Month</SelectItem>
-            <SelectItem value="lastMonth">Last Month</SelectItem>
             <SelectItem value="thisYear">This Year</SelectItem>
           </SelectContent>
         </Select>
       </div>
-      <div>
-        <h1 className="text-nord-0 font-bold"> <span className="text-nord-10">Average Order Value</span>: {average}$</h1>
-        <h1 className="text-nord-0 font-bold"> <span className="text-nord-10">Total Order Amount</span>: {data.reduce((sum, el) =>sum + el.totalOrders,0)}</h1>
-        <h1 className="text-nord-0 font-bold mb-4"> <span className="text-nord-10">Total Revenue</span>: {data.reduce((sum, el)=>sum+el.totalRevenue,0)}$</h1>
-      </div>
       <div className="my-5 grid grid-cols-1 lg:grid-cols-3 gap-2">
-        <OrderChart data={data} dataKey="totalOrders" label="Amount of orders" color="#bf616a"/>
-        <OrderChart data={data} dataKey="totalRevenue" label="Total Revenue" color="#88c0d0"/>
+        <OrderChart data={data?.data ?? []} dataKey="totalOrders" label="Amount of orders" color="#bf616a"/>
+        <OrderChart data={data?.data ?? []} dataKey="totalRevenue" label="Total Revenue" color="#88c0d0"/>
       </div>
     </div>
   );
+}
+const formatDate = (date) => date.toISOString().split('T')[0];
+
+const getWeekRange = () => {
+  const today = new Date();
+
+  // Get Sunday as start of the week
+  const firstDay = new Date(today);
+  firstDay.setDate(today.getDate() - 7);
+
+  const lastDay = new Date(today);
+
+  return {
+    start: formatDate(firstDay),
+    end: formatDate(lastDay),
+  };
+};
+
+const getYearRange = () => {
+  const today = new Date();
+
+  // First day of the current year: January 1st
+  const firstDay = new Date(today.getFullYear(), 0, 1);
+
+  // Last day of the current year: December 31st
+  const lastDay = new Date(today.getFullYear(), 11, 31);
+
+  return {
+    start: formatDate(firstDay),
+    end: formatDate(lastDay),
+  };
+}
+
+const getMonthRange = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+
+  // First day of the current month (day = 1)
+  const firstDay = new Date(year, month, 1);
+
+  // Last day of the current month: 
+  // Create a date of the 1st day of the next month, then subtract 1 day
+  const lastDay = new Date(year, month + 1, 0);
+
+  return {
+    start: formatDate(firstDay),
+    end: formatDate(lastDay),
+  };
 }
