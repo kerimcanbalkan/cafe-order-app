@@ -19,6 +19,7 @@ export default function AdminStatistics(){
   const [end, setEnd] = useState(initialEnd);
   const [group, setGroup] = useState("day");
 
+
   useEffect(() => {
     let range;
 
@@ -56,9 +57,7 @@ export default function AdminStatistics(){
   });
 
 
-  console.log("THIS IS STATS DATA RETURNED", data);
-
-    if (isLoading)
+  if (isLoading)
     return (
       <div>
         <Loading />
@@ -75,7 +74,7 @@ export default function AdminStatistics(){
               refetch();
             }}
           >
-            Retry
+             Retry
           </Button>
         </div>
       </div>
