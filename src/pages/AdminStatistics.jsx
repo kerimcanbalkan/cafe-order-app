@@ -95,9 +95,14 @@ export default function AdminStatistics(){
           </SelectContent>
         </Select>
       </div>
+       <div>
+         <h1 className="text-nord-0 font-bold"> <span className="text-nord-10">Average Order Value</span>: {data?.data?.averageOrderValue}$</h1>
+         <h1 className="text-nord-0 font-bold"> <span className="text-nord-10">Total Order Amount</span>: {data?.data?.totalOrders}$</h1>
+         <h1 className="text-nord-0 font-bold mb-4"> <span className="text-nord-10">Total Revenue</span>: {data?.data?.totalRevenue}$</h1>
+       </div>
       <div className="my-5 grid grid-cols-1 lg:grid-cols-3 gap-2">
-        <OrderChart data={data?.data ?? []} dataKey="totalOrders" label="Amount of orders" color="#bf616a"/>
-        <OrderChart data={data?.data ?? []} dataKey="totalRevenue" label="Total Revenue" color="#88c0d0"/>
+        <OrderChart data={data?.data.aggregatedStats ?? []} dataKey="totalOrders" label="Amount of orders" color="#bf616a"/>
+        <OrderChart data={data?.data.aggregatedStats ?? []} dataKey="totalRevenue" label="Total Revenue" color="#88c0d0"/>
       </div>
     </div>
   );

@@ -38,6 +38,7 @@ export default function AdminMenu() {
         <Loading />
       </div>
     );
+  
   if (error)
     return (
       <div className="container mx-auto h-svh">

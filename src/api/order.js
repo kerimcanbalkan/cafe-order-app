@@ -18,15 +18,20 @@ export const postOrder = async ({cart, tableID}) => {
  * @param {number|string} tableNumber - The table number to fetch the active order for.
  * @returns {Promise<Object|null>} The active order data or null if not found.
  */
-export const getOrders = async () => {
-  const response = await authApi().get("order",{
+export const getOrders = async (page, limit) => {
+  let query = "";
+  if (page && limit) {
+    query = `?page=${page}&limit=${limit}`;
+  }
+
+  const response = await authApi().get("order" + query, {
     headers: {
       'Cache-Control': 'no-cache',
     },
   });
-  
+
   return response.data;
-}
+};
 
 /**
  * Retrieves the active order for a specific table.
