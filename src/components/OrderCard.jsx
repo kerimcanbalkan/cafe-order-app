@@ -32,7 +32,7 @@
  *
  * @param {{ order: Order }} props - The component props.
  */
-export default function OrderCard({ order, setOpenDetails, setSelectedOrder }) {
+export default function OrderCard({ order, setOpenDetails, setSelectedOrder, className }) {
   const [date, hour] = new Date(order.createdAt)
   .toLocaleString("en-GB", {
     day: "2-digit",
@@ -43,7 +43,7 @@ export default function OrderCard({ order, setOpenDetails, setSelectedOrder }) {
   })
   .split(", ");
   return (
-    <div className={`flex flex-col cursor-pointer text-sm shadow-sm ${order.closedAt && order.servedAt ? "shadow-nord-10" : "shadow-nord-12" } p-2 w-full overflow-hidden rounded-md text-nord-0`} onClick={() => {
+    <div className={`flex flex-col cursor-pointer text-sm shadow-sm ${order.closedAt && order.servedAt ? "shadow-nord-10" : "shadow-nord-12" } p-2 w-full overflow-hidden rounded-md text-nord-0 ${className}`} onClick={() => {
       if (setOpenDetails && setSelectedOrder) {
         setOpenDetails(true);
         setSelectedOrder(order);        
