@@ -16,6 +16,7 @@ import { useAlert } from "@/components/AlertProvider";
  * @param {string} props.menuItem.description - The menuItem description.
  * @param {string} props.menuItem.category - The menuItem category.
  * @param {number} props.menuItem.price - The menuItem price.
+ * @param {string} props.menuItem.currency - The menuItem currency.   
  * @param {string} props.menuItem.image - The menuItem image url .
  * @param {function(menuItem): void} props.setSelectedMenuItem - For sharing the seleted item state with the parent component.
  * @param {function(boolean): void} props.setOpenDetails - For sharing the open state of the MenuItemDetails card with the parent component.
@@ -23,6 +24,8 @@ import { useAlert } from "@/components/AlertProvider";
 function MenuItemCard({ menuItem, setSelectedMenuItem, setOpenDetails }) {
   const {addToCart} = useCart();
   const showAlert = useAlert();
+
+
 
 
   const handlePlusButtonClick = (e) =>  {
@@ -53,7 +56,7 @@ function MenuItemCard({ menuItem, setSelectedMenuItem, setOpenDetails }) {
             {menuItem.category}
           </CardDescription>
           <div className="flex justify-between items-center">
-            <p className="text-nord-0 font-bold">${menuItem.price}</p>
+            <p className="text-nord-0 font-bold">{formatPriceIntl((menuItem.price)/100, menuItem.currency)}</p>
             <Button className="text-white bg-nord-11 rounded-md hover:bg-nord-1 
              transition-transform duration-200 ease-in-out 
             active:scale-90 focus:scale-100 p-4 text-sm md:text-md lg:text-lg" onClick={(e) => {handlePlusButtonClick(e)}}>
@@ -67,3 +70,10 @@ function MenuItemCard({ menuItem, setSelectedMenuItem, setOpenDetails }) {
 }
 
 export { MenuItemCard };
+
+function formatPriceIntl(amount, currencyCode, locale = 'en-US') {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currencyCode
+  }).format(amount);
+}

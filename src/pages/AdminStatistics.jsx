@@ -11,14 +11,12 @@ import { useQuery } from "@tanstack/react-query";
 import { getOrderStatistics } from "@/api/statistics";
 import Loading from "@/components/Loading";
 
-
 export default function AdminStatistics(){
   const { start: initialStart, end: initialEnd } = getWeekRange();
   const [selectedRange, setSelectedRange] = useState("last7Days");
   const [start, setStart] = useState(initialStart);
   const [end, setEnd] = useState(initialEnd);
   const [group, setGroup] = useState("day");
-
 
   useEffect(() => {
     let range;

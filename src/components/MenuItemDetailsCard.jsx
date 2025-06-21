@@ -17,12 +17,15 @@ import { useAlert } from "@/components/AlertProvider";
  * @param {string} props.menuItem.description - The product description.
  * @param {string} props.menuItem.category - The product category.
  * @param {number} props.menuItem.price - The product price.
+ * @param {string} props.menuItem.currency - The product price.
  * @param {string} props.menuItem.image - The product image url.
  */
 function MenuItemDetailsCard({ className, open, setOpen, menuItem }) {
   const [quantity, setQuantity] = useState(1);
   const {addToCart} = useCart();
   const showAlert = useAlert();
+
+  const  priceStr = formatPriceIntl((menuItem.price * quantity)/100, menuItem.currency);
 
   const handleAddToCart = () => {
     addToCart({menuItem, quantity});
@@ -50,7 +53,7 @@ function MenuItemDetailsCard({ className, open, setOpen, menuItem }) {
           {menuItem.description}
         </DialogDescription>
         <Button className="bg-nord-11 text-nord-6 hover:bg-nord-12 active:scale-95 transition truncate" onClick={handleAddToCart}>
-          Add to cart for <span className="font-bold">${menuItem.price * quantity}</span>
+                                                 Add to cart for <span className="font-bold">{priceStr}</span>
         </Button>
       </DialogContent>
     </Dialog>
@@ -58,3 +61,10 @@ function MenuItemDetailsCard({ className, open, setOpen, menuItem }) {
 }
 
 export { MenuItemDetailsCard };
+
+function formatPriceIntl(amount, currencyCode, locale = 'en-US') {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currencyCode
+  }).format(amount);
+}
