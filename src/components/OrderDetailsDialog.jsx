@@ -45,6 +45,7 @@ import OrderCloseDialog from "./OrderCloseDialog";
  */
 export default function OrderDetailsDialog({order, open, setOpen, refetch, variation}){
   const [alertOpen, setAlertOpen] = useState(false);
+  const currency = order?.items[0]?.menuItem?.currency || "";
   
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -56,7 +57,7 @@ export default function OrderDetailsDialog({order, open, setOpen, refetch, varia
           {order?.items?.map((item) => (
             <div key={item.menuItem.id} className="flex justify-between mb-2">
               <p className="text-nord-1">{item.menuItem.name} <span className="text-nord-11 text-lg">x{item.quantity}</span></p>
-              <p className="font-bold text-nord-1">{`${item.menuItem.price * item.quantity}$`}</p>
+              <p className="font-bold text-nord-1">{formatPriceIntl((item.menuItem.price * item.quantity)/100, currency)}</p>
             </div>
           ))}
         </div>
@@ -65,7 +66,7 @@ export default function OrderDetailsDialog({order, open, setOpen, refetch, varia
         <div className="border-t border-nord-4 pt-2 text-nord-10">
           <p className="text-md flex justify-between">
             <span>Total Price</span>
-            <span className="font-bold">{order.totalPrice}$</span>
+            <span className="font-bold">{formatPriceIntl(order.totalPrice / 100, currency)}</span>
           </p>
         </div>
         
@@ -101,4 +102,12 @@ export default function OrderDetailsDialog({order, open, setOpen, refetch, varia
       }
     </Dialog>
   );
+}
+
+function formatPriceIntl(amount, currencyCode, locale = 'en-US') {
+  if (!currencyCode) return amount.toFixed(2); // fallback if currency missing
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currencyCode
+  }).format(amount);
 }

@@ -79,4 +79,3 @@ function formatPriceIntl(amount, currencyCode, locale = 'en-US') {
     currency: currencyCode
   }).format(amount);
 }
-
