@@ -22,8 +22,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { currencies as curr } from "@/data/currencies";
 
 const MAX_FILE_SIZE = 5000000;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
@@ -31,9 +39,15 @@ const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name should be at least 2 characters" }),
   description: z.string().min(5, { message: "Description should be at least 5 characters" }),
-  price: z.string().refine((val) => !isNaN(Number(val)), {
-    message: "Price must be a number and bigger than 0",
+  price: z
+  .string()
+  .refine((val) => {
+    const num = Number(val);
+    return Number.isInteger(num) && num > 0;
+  }, {
+    message: "Price must be a positive integer (in cents).",
   }),
+  currency: z.string().min(3, {message: "Use valid ISO 4217 code"}).max(3, {message: "Use valid ISO 4217 code"}),
   category: z.string().min(2, { message: "Category should be at least 2 characters" }),
     image: z
     .any()
@@ -61,6 +75,7 @@ export default function MenuItemAddDialog({open, setOpen, refetch}) {
       description: "",
       price: "",
       category: "",
+      currency: " ",
       image: null,
     },
   });
@@ -85,6 +100,7 @@ export default function MenuItemAddDialog({open, setOpen, refetch}) {
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("price", data.price);
+    formData.append("currency", data.currency);
     formData.append("category", data.category);
     formData.append("image", data.image);
 
@@ -140,7 +156,34 @@ export default function MenuItemAddDialog({open, setOpen, refetch}) {
                     <FormItem>
                       <FormLabel>Price</FormLabel>
                       <FormControl>
-                        <Input type="number" step="0.01" placeholder="1.00" {...field} />
+                        <Input type="number" step="1" placeholder="1.00" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="currency"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Currency</FormLabel>
+                      <FormControl>
+                        <Select
+                          value={field.value ?? ""}
+                          onValueChange={field.onChange}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select currency" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {Object.entries(curr).map(([code, name]) => (
+                              <SelectItem key={code} value={code}>
+                                {code} – {name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </FormControl>
                       <FormMessage />
                     </FormItem>

@@ -17,6 +17,7 @@ export function CartSidebar() {
   const { toggleSidebar } = useSidebar();
   const { cart, getCartTotal, clearCart } = useCart();
   const { order } = useOrder();
+  const currency = order?.items?.[0]?.menuItem?.currency;
 
   return (
     <Sidebar side="right" variant="inset">
@@ -34,13 +35,15 @@ export function CartSidebar() {
             {order?.items?.map((item) => (
               <div key={item.menuItem.id} className="flex justify-between mb-2">
                 <p className="text-nord-1">{`${item.menuItem.name} x${item.quantity}`}</p>
-                <p className="font-bold text-nord-1">{`${item.menuItem.price * item.quantity}$`}</p>
+                <p className="font-bold text-nord-1">{formatPriceIntl((item.menuItem.price * item.quantity)/100,item.menuItem.currency)}</p>
               </div>
             ))}
             <div className="border-t border-nord-4 pt-2 mt-2">
               <p className="text-lg flex justify-between">
                 <span>Total Order Price</span>
-                <span className="font-bold">{order.totalPrice}$</span>
+                <span className="font-bold">
+                  {formatPriceIntl(order.totalPrice / 100, currency)}
+                </span>
               </p>
             </div>
           </div>
@@ -57,7 +60,7 @@ export function CartSidebar() {
         </div>
                 {cart.length === 0 ? (""): (
           <div>
-                        <p className="text-lg border-t border-nord-4 pt-3 text-nord-1 mt-2 flex justify-between">Total Price <span className="font-bold">{getCartTotal()}$</span></p>
+            <p className="text-lg border-t border-nord-4 pt-3 text-nord-1 mt-2 flex justify-between">Total Price <span className="font-bold">{formatPriceIntl(getCartTotal() / 100, currency)}</span></p>
             <Button className="bg-nord-11 hover:bg-nord-1 w-full mt-4 text-lg transition-transform duration-200 ease-in-out active:scale-90 focus:scale-100"onClick={clearCart}>Clear Cart</Button>
           </div>
         )}
@@ -67,4 +70,12 @@ export function CartSidebar() {
       </SidebarFooter>
     </Sidebar>
   );
+}
+
+function formatPriceIntl(amount, currencyCode, locale = 'en-US') {
+  if (!currencyCode) return amount.toFixed(2); // fallback if currency missing
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currencyCode
+  }).format(amount);
 }

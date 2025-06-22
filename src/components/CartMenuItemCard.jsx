@@ -13,6 +13,7 @@ import {useCart} from "@/context/cart";
  * @param {string} props.orderItem.menuItem.description - The menu item description.
  * @param {string} props.orderItem.menuItem.category - The menu item category.
  * @param {number} props.orderItem.menuItem.price - The menu item price.
+ * @param {string} props.orderItem.menuItem.currency - The menu item currency.
  * @param {string} props.orderItem.menuItem.image - The menu item image URL.
  * @param {number} props.orderItem.quantity - The quantity of the ordered menu item.
  * @param {string} props.className - The tailwind classes for the styling
@@ -29,8 +30,8 @@ export default function CartMenuItemCard({orderItem, className}){
   }
 
   const calculatePrice = (price, quantity) => {
-    const total = price * quantity;
-    return Math.trunc(total * 100)/100;
+    const total = (price * quantity) / 100;
+    return formatPriceIntl(total, orderItem.menuItem.currency);
 }
     
   return (
@@ -43,7 +44,7 @@ export default function CartMenuItemCard({orderItem, className}){
               className="w-10 h-10 object-cover rounded-md object-center"
             />
             <h3 className="truncate p-2">{orderItem.menuItem.name}</h3>
-            <p className="font-bold">{calculatePrice(orderItem.menuItem.price, orderItem.quantity)}$</p>
+            <p className="font-bold">{calculatePrice(orderItem.menuItem.price, orderItem.quantity)}</p>
             <div className="flex">
               <LucideChevronLeft className="text-nord-11 cursor-pointer transition-transform duration-200 ease-in-out active:scale-50 focus:scale-100" onClick={handleRemoveClick}/>
               <p>{orderItem.quantity}</p>
@@ -53,4 +54,11 @@ export default function CartMenuItemCard({orderItem, className}){
         </CardHeader>
       </Card>
   )
+}
+
+function formatPriceIntl(amount, currencyCode, locale = 'en-US') {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currencyCode
+  }).format(amount);
 }

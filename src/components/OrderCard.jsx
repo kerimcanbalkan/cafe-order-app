@@ -41,7 +41,10 @@ export default function OrderCard({ order, setOpenDetails, setSelectedOrder, cla
     hour: "2-digit",
     minute: "2-digit",
   })
-  .split(", ");
+    .split(", ");
+
+  const currency = order?.items[0]?.menuItem?.currency || "";
+  
   return (
     <div className={`flex flex-col cursor-pointer text-sm shadow-sm ${order.closedAt && order.servedAt ? "shadow-nord-10" : "shadow-nord-12" } p-2 w-full overflow-hidden rounded-md text-nord-0 ${className}`} onClick={() => {
       if (setOpenDetails && setSelectedOrder) {
@@ -56,7 +59,7 @@ export default function OrderCard({ order, setOpenDetails, setSelectedOrder, cla
         {order.items.map((item) => (
           <div key={item.menuItem.id} className="flex justify-between mb-2">
             <p className="text-nord-1">{`${item.menuItem.name} x${item.quantity}`}</p>
-            <p className="font-bold text-nord-1">{`${item.menuItem.price * item.quantity}$`}</p>
+            <p className="font-bold text-nord-1">{formatPriceIntl((item?.menuItem.price / 100) * item.quantity, currency)}</p>
           </div>
         ))}
       </div>
@@ -65,7 +68,7 @@ export default function OrderCard({ order, setOpenDetails, setSelectedOrder, cla
       <div className="border-t border-nord-4 pt-2 mb-1 text-nord-10">
         <p className="text-md flex justify-between">
           <span>Total Price</span>
-          <span className="font-bold">{order.totalPrice}$</span>
+          <span className="font-bold">{formatPriceIntl(order.totalPrice / 100, currency)}</span>
         </p>
       </div>
 
@@ -85,3 +88,10 @@ export default function OrderCard({ order, setOpenDetails, setSelectedOrder, cla
   );
 }
 
+function formatPriceIntl(amount, currencyCode, locale = 'en-US') {
+  if (!currencyCode) return amount.toFixed(2); // fallback if currency missing
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currencyCode
+  }).format(amount);
+}
