@@ -65,7 +65,7 @@ const  [selectedMenuItem, setSelectedMenuItem] = useState(null);
   return (
     <>
       <Tabs defaultValue={categories[0]}>
-        <TabsList className="flex overflow-x-auto border-b border-gray-300 whitespace-nowrap no-scrollbar">
+        <TabsList className="flex overflow-x-auto border-b border-gray-300 whitespace-nowrap no-scrollbar text-sm sm:text-md">
           {sortedCategories.map((category) => (
             <TabsTrigger
               key={category}

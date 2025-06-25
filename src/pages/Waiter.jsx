@@ -4,10 +4,37 @@ import Loading from "@/components/Loading";
 import { getOrdersWaiter } from "@/api/order";
 import { getTables } from "@/api/table";
 import { Button } from "@/components/ui/button";
-import OrderDetailsDialog from "../components/OrderDetailsDialog";
-import { useState } from "react";
+import OrderDetailsDialog from "@/components/OrderDetailsDialog";
+import { useState, useEffect } from "react";
+import NotificationAlert from "@/components/NotificationAlert";
 
 export default function Waiter() {
+  const [userResponded, setUserResponded] = useState(false);
+
+  function notifyUser() {
+    if (!("Notification" in window)){
+      alert("Browser does not support notifications");
+    } else if (Notification.permission === "granted") {
+      const notification = new Notification("Notifications are enabled.");
+    } else if (Notification.permission !== "denied") {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          const notification = new Notification("Notifications are enabled.");
+        }
+      })
+    }
+  }
+
+  const enableNotifsAndClose = () => {
+    notifyUser();
+    setUserResponded(true);
+  }
+
+  const disableNotifsAndClose = () => {
+    console.log(userResponded);
+    setUserResponded(true);
+  }
+
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
   
@@ -75,6 +102,12 @@ export default function Waiter() {
   if (!isLoading && !error && (!orders?.data || orders?.data.length === 0)) {
     return (
       <div className="container mx-auto h-svh">
+         {(!userResponded && Notification.permission !== "granted") && (
+             <NotificationAlert
+              enableFunc={enableNotifsAndClose}
+              disableFunc={disableNotifsAndClose}
+              />
+          )}
         <div className="w-full h-full flex flex-col gap-4 items-center justify-center">
           <h3 className="text-nord-11 text-lg">No recent orders at the moment.</h3>
           <Button
@@ -87,13 +120,23 @@ export default function Waiter() {
       </div>
     );
   }
-  
+
   return (
     <div className="container mx-auto my-5 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">
+
+      {(!userResponded && Notification.permission !== "granted") && (
+        <NotificationAlert
+         enableFunc={enableNotifsAndClose}
+         disableFunc={disableNotifsAndClose}
+       />
+      )}
+
       {enrichedOrders.map((order) => (
         <OrderCard order={order} key={order.id} setOpenDetails={setDetailsOpen} setSelectedOrder={setSelectedOrder}/>
       ))}
+
       {selectedOrder && <OrderDetailsDialog order={selectedOrder} open={detailsOpen} setOpen={setDetailsOpen} refetch={refetch} variation="waiter"/>}
+
     </div>
   );
 }
