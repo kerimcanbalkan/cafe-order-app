@@ -1,5 +1,5 @@
 import OrderCard from "@/components/OrderCard";
-import { useQueries } from "@tanstack/react-query";
+import { useQueries, useQueryClient } from "@tanstack/react-query";
 import Loading from "@/components/Loading";
 import { getOrdersWaiter } from "@/api/order";
 import { getTables } from "@/api/table";
@@ -71,6 +71,34 @@ export default function Waiter() {
       };
     })
     : [];
+
+
+
+  useEffect(() => {
+   const eventSource = new EventSource("/api/v1/events");
+
+   eventSource.onmessage = (event) => {
+     const tableId = event.data;
+     const table = tables?.data?.find(t => t.id === tableId);
+     const tableName = table?.name || "Unknown Table";
+
+     console.log("New order received at:", tableName);
+
+     refetch();
+
+     if (Notification.permission === "granted") {
+       new Notification("New Order Received", {
+         body: `A new order has been placed at ${tableName}`,
+       });
+     } else {
+       console.log("Notification not shown: permission not granted.");
+     }
+  };
+
+   return () => {
+     eventSource.close();
+   };
+  }, [tables]); // checks for tables because I want to display table name on notification
 
 
   const isLoading = orderQuery.isLoading || tablesQuery.isLoading;
