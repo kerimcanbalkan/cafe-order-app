@@ -21,11 +21,16 @@ import AdminMenu from "@/pages/AdminMenu";
 import AdminTables from "@/pages/AdminTables";
 import AdminOrders from "@/pages/AdminOrders";
 import AdminEmployees from "@/pages/AdminEmployees";
-
+import LandingPage from "@/pages/LandingPage";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
+  {
+    path:"/",
+    element: <LandingPage/>,
+    errorElement: <Error/>,
+  },
   {
     path: "/order/:tableID",
     element:
