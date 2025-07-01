@@ -50,7 +50,7 @@ export default function OrderDetailsDialog({order, open, setOpen, refetch, varia
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="p-4 min-h-100">
-        <DialogTitle className="text-nord-10">{order.table}</DialogTitle>
+        <DialogTitle className="text-nord-10">{order.tableName}</DialogTitle>
 
         {/* Scrollable list of items */}
         <div className="flex-1 overflow-y-auto pr-1 mb-2">

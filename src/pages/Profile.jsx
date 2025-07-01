@@ -1,4 +1,7 @@
-import Chart from "@/components/Chart";
+import { useUser } from "@/context/user";
+import { useQuery } from "@tanstack/react-query";
+import { getEmployeeStatistics } from "@/api/statistics";
+import Loading from "@/components/Loading";
 import { useState, useEffect } from "react";
 import {
   Select,
@@ -7,17 +10,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useQuery } from "@tanstack/react-query";
-import { getOrderStatistics } from "@/api/statistics";
-import Loading from "@/components/Loading";
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+import WaiterStats from "@/components/WaiterStats";
+import CashierStats from "@/components/CashierStats";
 
-export default function AdminStatistics(){
+
+
+export default function Profile(){
   const { start: initialStart, end: initialEnd } = getWeekRange();
   const [selectedRange, setSelectedRange] = useState("last7Days");
   const [start, setStart] = useState(initialStart);
   const [end, setEnd] = useState(initialEnd);
   const [group, setGroup] = useState("day");
+  const {user} = useUser();
 
   useEffect(() => {
     let range;
@@ -49,19 +54,20 @@ export default function AdminStatistics(){
     }
   }, [selectedRange]);
 
+
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["data", start, end, group],
-    queryFn: () => getOrderStatistics({ from: start, to: end, groupBy: group }),
+    queryKey: ["data", start, end, group, user.id],
+    queryFn: () => getEmployeeStatistics({id: user.id, from: start, to: end, groupBy: group }),
     enabled: Boolean(start && end),
   });
-
 
   if (isLoading)
     return (
       <div>
         <Loading />
       </div>
-    );
+  );
+
   if (error)
     return (
       <div className="container mx-auto h-svh">
@@ -77,15 +83,27 @@ export default function AdminStatistics(){
           </Button>
         </div>
       </div>
-  );
+    );
+
+
+  const date = new Date(user.createdAt);
 
   return (
-    <div className="max-w-300 mx-auto">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-md font-semibold text-nord-0">View Order Statistics</h2>
+    <div className="mt-5">
+      <h1 className="text-xl text-nord-10 font-bold border-b border-nord-10">Profile</h1>
+      <div className="mt-2">
+        <p><span className="font-bold">Name: </span>{user.name}</p>
+        <p><span className="font-bold">Surname: </span>{user.surname}</p>
+        <p><span className="font-bold">Email: </span>{user.email}</p>
+        <p><span className="font-bold">Role: </span>{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</p>
+        <p><span className="font-bold">Start Date: </span>{date.toLocaleDateString()}</p>
+      </div>
+      {user.role != "admin" && (<div className="mt-5">
+        <div className="flex justify-between items-center mb-4 border-b border-nord-10 p-2">
+        <h1 className="text-xl text-nord-10 font-bold ">Statistics</h1>
         <Select defaultValue={selectedRange} onValueChange={setSelectedRange}>
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Today" />
+            <SelectValue placeholder="Last 7 Days" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="last7Days">Last 7 Days</SelectItem>
@@ -93,19 +111,22 @@ export default function AdminStatistics(){
             <SelectItem value="thisYear">This Year</SelectItem>
           </SelectContent>
         </Select>
-      </div>
-       <div>
-         <h1 className="text-nord-0 font-bold"> <span className="text-nord-10">Average Order Value</span>: {formatPriceIntl(data?.data?.averageOrderValue / 100, "USD")}</h1>
-         <h1 className="text-nord-0 font-bold"> <span className="text-nord-10">Total Order Amount</span>: {data?.data?.totalOrders}</h1>
-         <h1 className="text-nord-0 font-bold mb-4"> <span className="text-nord-10">Total Revenue</span>: {formatPriceIntl(data?.data?.totalRevenue, "USD")}</h1>
-       </div>
-      <div className="my-5 grid grid-cols-1 lg:grid-cols-3 gap-2">
-        <Chart data={data?.data.aggregatedStats ?? []} dataKey="totalOrders" label="Amount of orders" color="#bf616a"/>
-        <Chart data={data?.data.aggregatedStats ?? []} dataKey="totalRevenue" label="Total Revenue" color="#88c0d0"/>
-      </div>
-    </div>
-  );
-}
+        </div>
+      </div>)}
+
+  {data && user.role != "admin" && (
+    user.role === "waiter" ? (
+     <WaiterStats data={data.data} />
+    ) : (
+     <CashierStats data={data.data} />
+   )
+  )}
+     </div>
+   )
+  }
+
+
+
 const formatDate = (date) => date.toISOString().split('T')[0];
 
 const getWeekRange = () => {

@@ -22,6 +22,7 @@ import AdminTables from "@/pages/AdminTables";
 import AdminOrders from "@/pages/AdminOrders";
 import AdminEmployees from "@/pages/AdminEmployees";
 import LandingPage from "@/pages/LandingPage";
+import Profile from "@/pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
       {
         path: "employees",
         element:<AdminEmployees/>,
+      },
+      {
+        path: "profile",
+        element: <Profile/>,
       }
     ]
   },
@@ -100,6 +105,11 @@ const router = createBrowserRouter([
         ),
         errorElement: <Error/>,
       },
+      {
+        path:"profile",
+        element: <Profile/>,
+        errorElement: <Error/>
+      },
     ]
   },
   {
@@ -114,6 +124,11 @@ const router = createBrowserRouter([
         index:true,
         element:<Cashier />,
         errorElement: <Error/>,
+      },
+      {
+        path:"profile",
+        element: <Profile/>,
+        errorElement: <Error/>
       },
     ]
   },
