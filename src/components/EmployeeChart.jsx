@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export default function OrderChart({ data, dataKey, label, color }) {
+export default function EmployeeChart({ data, dataKey, label, color }) {
   return (
     <Card>
       <CardContent>

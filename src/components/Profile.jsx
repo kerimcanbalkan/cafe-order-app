@@ -17,9 +17,9 @@ export default function Profile(){
   
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="cursor-pointer flex gap-2"><span className="text-nord-0 hover:underline">{user?.name}</span><CircleUserRound size={26} className="text-nord-10"/></DropdownMenuTrigger>
+      <DropdownMenuTrigger className="cursor-pointer flex gap-2"><span className="text-nord-0 hover:underline">{user?.name} {user?.surname}</span><CircleUserRound size={26} className="text-nord-10"/></DropdownMenuTrigger>
       <DropdownMenuContent className="text-nord-0">
-        <DropdownMenuItem onClick={() => {navigate("#")}}>Profile</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => {navigate("profile")}}>Profile</DropdownMenuItem>
         <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
