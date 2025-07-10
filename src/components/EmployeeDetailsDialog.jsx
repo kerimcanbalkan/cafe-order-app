@@ -2,6 +2,7 @@ import { Dialog, DialogContent, DialogFooter, DialogTitle} from "@/components/ui
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import EmployeeDeleteDialog from "@/components/EmployeeDeleteDialog";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Displays employee details and allows to delete the employee data.
@@ -20,6 +21,7 @@ import EmployeeDeleteDialog from "@/components/EmployeeDeleteDialog";
  */
 export default function EmployeeDetailsDialog({ open, setOpen, user, refetch}) {
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const navigate = useNavigate();
   
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -36,7 +38,9 @@ export default function EmployeeDetailsDialog({ open, setOpen, user, refetch}) {
           <p><span className="font-bold">Started At: </span>{new Date(user.createdAt).toLocaleString("en-GB")}</p>
         </div>
         <DialogFooter>
-          <Button className="text-white bg-nord-14 hover:bg-nord-14">Check Statistics</Button>
+          <Button className="text-white bg-nord-14 hover:bg-nord-14" onClick={() => {
+            navigate(`/admin/employees/statistics/${user.id}`);
+          }}>Check Statistics</Button>
           <Button className="text-white bg-nord-11 hover:bg-nord-11" onClick={() => {
             setDeleteOpen(true);
             setOpen(false);

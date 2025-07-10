@@ -39,3 +39,10 @@ export const deleteUser = async (id) => {
   
   return response.data;
 }
+
+// Requeires admin
+export const getUser = async ({id}) => {
+  const response = await authApi().get(`/user/${id}`);
+
+  return response.data;
+}

@@ -23,6 +23,7 @@ import AdminOrders from "@/pages/AdminOrders";
 import AdminEmployees from "@/pages/AdminEmployees";
 import LandingPage from "@/pages/LandingPage";
 import Profile from "@/pages/Profile";
+import EmployeeStatistics from "@/pages/EmployeeStatistics";
 
 const queryClient = new QueryClient();
 
@@ -80,7 +81,16 @@ const router = createBrowserRouter([
       },
       {
         path: "employees",
-        element:<AdminEmployees/>,
+        children: [
+          {
+            path: "",
+            element:<AdminEmployees/>,
+          },
+          {
+            path: "statistics/:employeeID",
+            element: <EmployeeStatistics/>,
+          }
+        ]
       },
       {
         path: "profile",

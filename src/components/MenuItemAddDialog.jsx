@@ -43,10 +43,10 @@ const formSchema = z.object({
   .string()
   .refine((val) => {
     const num = Number(val);
-    return Number.isInteger(num) && num > 0;
-  }, {
-    message: "Price must be a positive integer (in cents).",
-  }),
+    return !isNaN(num) && num > 0 && /^\d+\.\d{1,2}$/.test(val);
+    }, {
+      message: "Price must be a number and bigger than 0 with up to two decimal places",
+    }),
   currency: z.string().min(3, {message: "Use valid ISO 4217 code"}).max(3, {message: "Use valid ISO 4217 code"}),
   category: z.string().min(2, { message: "Category should be at least 2 characters" }),
     image: z
@@ -99,7 +99,7 @@ export default function MenuItemAddDialog({open, setOpen, refetch}) {
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("description", data.description);
-    formData.append("price", data.price);
+    formData.append("price", data.price * 100);
     formData.append("currency", data.currency);
     formData.append("category", data.category);
     formData.append("image", data.image);
@@ -156,7 +156,7 @@ export default function MenuItemAddDialog({open, setOpen, refetch}) {
                     <FormItem>
                       <FormLabel>Price</FormLabel>
                       <FormControl>
-                        <Input type="number" step="1" placeholder="1.00" {...field} />
+                        <Input type="number" step="0.1" placeholder="1.00" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
